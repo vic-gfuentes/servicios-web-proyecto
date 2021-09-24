@@ -8,23 +8,14 @@
 
 ## Git Basics
 
-- git checkout develop
-- git pull origin develop
-- git fetch
-- git checkout -b "##+nombre"
-- git add .
-- git commit -m "Mensaje del cmabio que se hizo"
-- git push
-
-## Conflict Troubleshooting
-
-- git checkout "branch"
-- ggpull
-- git rebase develop
-- code . (resolve conflicts)
-- git add .
-- git rebase --continue
-- git commit --amend or git commit -m ""
-- ggpush or ggpush -f
-- git merge develop
-- git reset --hard origin/Branch
+- git branch  |  lista de branches
+- git checkout <branch>   |  cambiamos de branch
+- git checkout -b "nuevo_branch" | Creo mi nuevo branch
+- git status   | Reviso el stado de mi working tree
+- git add .   | Agrego los cambios realizados en mi branch
+- git commit -m "Commit"   | Creo el snapshot con el commit
+- git push | Subo los cambios a remote, en caso de que le salga en mensaje del upstream solo copian el comando.
+-  En github hago el pull request, y si no tiene conflictos hago `Merge`, opcionalmente puedo solicituar que revisen mi codido con la pestaña de reviewers (recuerden eliminar el branch cuando se mergea).
+- git checkout develop | vuelvo al branch de origen
+- git pull | actualizo los nuevos cambios
+- git branch -D <branch> | Elimino de manera local mi branch.
