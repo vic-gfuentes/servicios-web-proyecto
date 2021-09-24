@@ -1,12 +1,21 @@
 import React from "react";
+import Logo from "../assets/Logo";
 import { Link } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
 
 const NavMenu = () => {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      bg="primary"
+      variant="dark"
+      className="sticky-top"
+    >
       <Container>
-        <Navbar.Brand>Logo</Navbar.Brand>
+        <Navbar.Brand>
+          <Logo idth="30" height="30" /> VVuelos
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
