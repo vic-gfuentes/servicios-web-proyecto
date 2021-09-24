@@ -39,7 +39,7 @@ const Hero = () => {
             </div>
           </div>
           <div className="col-lg-5 mt-3 mt-lg-0">
-            <img src={tickets} class="h-100 w-100" alt="tickets" />
+            <img src={tickets} className="h-100 w-100" alt="tickets" />
           </div>
         </div>
       </Container>

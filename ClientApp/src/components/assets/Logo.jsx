@@ -10,26 +10,26 @@ const Logo = ({ width, height }) => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M75.8191 74.6879L118.284 54.3803L91.6619 82.6093L65.6345 108.768L54.3182 96.3204L71.5408 78.9768L75.8191 74.6879Z"
         fill="#55C6FF"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M55.3183 117.498L66.6963 128.625L102.978 92.7931L130.703 92.7931C134.766 92.7931 138.059 89.4999 138.059 85.4375V85.4375C138.059 81.3752 134.766 78.0819 130.703 78.0819L95.0568 78.0819L55.3183 117.498Z"
         fill="#51E5A5"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M29.7721 88.7411L18.6456 77.8578L42.6984 54.3304L70.161 26.0276L83.7405 38.4755L64.9513 54.3304L29.7721 88.7411Z"
         fill="#51E5A5"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M69.0193 127.328V127.328C65.5059 130.842 59.8095 130.842 56.296 127.328L53.5696 124.602L53.2214 92.7935L21.7613 92.7935L19.9437 90.9759C16.4303 87.4624 16.4303 81.766 19.9437 78.2525V78.2525L68.6444 78.2664L69.0193 127.328Z"
         fill="#F4E12F"
       />
@@ -42,20 +42,20 @@ const Logo = ({ width, height }) => {
         fill="#24B57E"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M110.552 41.7382L121.678 53.1162L97.6252 77.7128L82.6089 90.1607L72.4242 77.7128L90.0838 60.3693L110.552 41.7382Z"
         fill="#55C6FF"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M81.7934 16.1918L70.9101 5.06532L38.4754 39.6073L7.92141 39.6073C3.54654 39.6073 -1.68046e-06 43.1538 -1.95362e-06 47.5287V47.5287C-2.22678e-06 51.9036 3.54654 55.4501 7.92142 55.4501L41.7245 55.4501L81.7934 16.1918Z"
         fill="#55C6FF"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M120.383 55.4373V55.4373C123.896 51.9238 123.896 46.2274 120.383 42.714L117.656 39.9875L86.7438 39.6393L85.8479 8.17928L84.0303 6.36166C80.5169 2.84822 74.8205 2.84822 71.307 6.36167V6.36167L71.3209 55.0623L120.383 55.4373Z"
         fill="#9A71FF"
       />
