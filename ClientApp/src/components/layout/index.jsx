@@ -9,7 +9,7 @@ const Layout = (props) => {
       <NavMenu />
       <main>
         <div
-          className="position-absolute h-100 w-100"
+          className='position-absolute h-100 w-100'
           style={{
             zIndex: "-1",
             backgroundImage: `url(${background})`,

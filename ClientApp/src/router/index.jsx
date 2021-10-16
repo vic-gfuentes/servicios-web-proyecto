@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router";
 import Landing from "../pages/landing";
 import LogIn from "../pages/auth/LogIn";
 import Register from "../pages/auth/Register";
-import Dashboard from "../layout/Dashboard";
+import Dashboard from "../components/layout/Dashboard";
 
 const Routes = () => {
   return (

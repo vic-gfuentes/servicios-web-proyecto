@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AppContext from "./context/AppContext";
-import Layout from "./components/layout/Layout";
-import Routes from "./components/router/Routes";
+import Layout from "./components/layout";
+import Routes from "./router";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({});
