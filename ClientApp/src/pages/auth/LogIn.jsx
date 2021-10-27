@@ -53,7 +53,7 @@ const LogIn = () => {
             <Card.Body>
               <div>
                 <h3 className='text-center font-weight-bold text-primary'>
-                  Sign In
+                  Ingreso
                 </h3>
                 <p className='text-center'>
                   Hola de nuevo! Ingresa a tu cuenta para continuar.
