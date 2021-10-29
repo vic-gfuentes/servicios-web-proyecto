@@ -99,7 +99,7 @@ namespace servicios_web_proyecto.Controllers
                 {
                     _context.Consecutives.Remove(consecutive);
                     _context.SaveChanges();
-                    return Ok(id);
+                    return Ok(consecutive);
                 }
                 else
                 {

@@ -18,6 +18,7 @@ const NavMenu = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     setCurrentUser({});
+    localStorage.removeItem("loggedUser");
     history.push("/");
   };
 

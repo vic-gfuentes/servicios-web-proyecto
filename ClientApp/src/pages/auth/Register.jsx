@@ -34,7 +34,7 @@ const Register = () => {
       });
       const data = await respose.json();
       setCurrentUser(data);
-
+      localStorage.setItem("loggedUser", JSON.stringify(data));
       history.push("/dashboard");
     } catch (error) {
       console.error(error);
