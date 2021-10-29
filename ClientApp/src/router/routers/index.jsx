@@ -1,5 +1,5 @@
-export { default as AdminRouter } from "./AdminRouter";
-export { default as ConsecutivesRouter } from "./ConsecutivesRouter";
-export { default as CustomerRouter } from "./CustomerRouter";
-export { default as SecurityRouter } from "./SecurityRouter";
-export { default as MaintenanceRouter } from "./MaintenanceRouter";
+export { AdminNav, AdminRouter } from "./AdminRouter";
+export { ConsecutiveNav, ConsecutivesRouter } from "./ConsecutivesRouter";
+export { CustomerNav, CustomerRouter } from "./CustomerRouter";
+export { SecurityNav, SecurityRouter } from "./SecurityRouter";
+export { MaintenanceNav, MaintenanceRouter } from "./MaintenanceRouter";

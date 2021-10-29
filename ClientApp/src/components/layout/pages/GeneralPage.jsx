@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Card } from "react-bootstrap";
-import Logo from "../../components/assets/Logo";
+import Logo from "../../assets/Logo";
 
 const AdminPage = () => {
   return (

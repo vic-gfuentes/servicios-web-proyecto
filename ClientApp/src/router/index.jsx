@@ -1,9 +1,9 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import { Route, Switch } from "react-router";
 import AppContext from "../context/AppContext";
-import Landing from "../pages/landing";
-import LogIn from "../pages/auth/LogIn";
-import Register from "../pages/auth/Register";
+import Landing from "../components/layout/pages/landing";
+import LogIn from "../components/layout/pages/auth/LogIn";
+import Register from "../components/layout/pages/auth/Register";
 import Dashboard from "../components/layout/Dashboard";
 import {
   AdminRouter,
