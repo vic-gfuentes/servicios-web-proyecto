@@ -99,7 +99,7 @@ namespace servicios_web_proyecto.Controllers
                 {
                     _context.Users.Remove(user);
                     _context.SaveChanges();
-                    return Ok(id);
+                    return Ok(user);
                 }
                 else
                 {

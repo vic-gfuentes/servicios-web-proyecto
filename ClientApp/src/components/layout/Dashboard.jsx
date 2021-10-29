@@ -5,6 +5,7 @@ import MaintenancePage from "../../pages/maintenance";
 import SecurityPage from "../../pages/security";
 import ConsecutivePage from "../../pages/consecutive";
 import CustomerPage from "../../pages/customer";
+import NonAuthorized from "./NonAuthorized";
 
 const Dashboard = () => {
   const { user } = useContext(AppContext);
@@ -23,7 +24,7 @@ const Dashboard = () => {
       case 5:
         return <CustomerPage />;
       default:
-        return <div>No content to show sorry, you dont have any role</div>;
+        return <NonAuthorized />;
     }
   };
 

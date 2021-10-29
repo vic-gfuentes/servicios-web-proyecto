@@ -50,12 +50,12 @@ namespace servicios_web_proyecto.Controllers
         }
 
         // POST api/<CountriesController>
-        [HttpPost]
-        public ActionResult Post([FromBody] Country country)
+        [HttpPost("{prefix?}")]
+        public ActionResult Post( [FromBody] Country country, [FromRoute] string prefix = "CT")
         {
             try
             {
-                var consecutive = _context.Consecutives.Single(consec => consec.Prefix == "CT");
+                var consecutive = _context.Consecutives.Single(consec => consec.Prefix == prefix);
                 country.CountryId = consecutive.GetConsecutiveCode();
                 _context.Countries.Add(country);
                 _context.SaveChanges();
@@ -101,7 +101,7 @@ namespace servicios_web_proyecto.Controllers
                 {
                     _context.Countries.Remove(country);
                     _context.SaveChanges();
-                    return Ok(id);
+                    return Ok(country);
                 }
                 else
                 {
