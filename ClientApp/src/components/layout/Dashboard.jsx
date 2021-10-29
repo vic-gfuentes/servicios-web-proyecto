@@ -1,11 +1,8 @@
 import React, { useContext } from "react";
 import AppContext from "../../context/AppContext";
-import AdminPage from "../../pages/admin";
-import MaintenancePage from "../../pages/maintenance";
-import SecurityPage from "../../pages/security";
-import ConsecutivePage from "../../pages/consecutive";
-import CustomerPage from "../../pages/customer";
-import NonAuthorized from "./NonAuthorized";
+import GeneralPage from "./pages/GeneralPage";
+import CustomerPage from "./pages/CustomerPage";
+import NonAuthorized from "./pages/NonAuthorized";
 
 const Dashboard = () => {
   const { user } = useContext(AppContext);
@@ -14,13 +11,10 @@ const Dashboard = () => {
   const renderDashboard = () => {
     switch (currentUser.role) {
       case 1:
-        return <AdminPage />;
       case 2:
-        return <MaintenancePage />;
       case 3:
-        return <SecurityPage />;
       case 4:
-        return <ConsecutivePage />;
+        return <GeneralPage />;
       case 5:
         return <CustomerPage />;
       default:

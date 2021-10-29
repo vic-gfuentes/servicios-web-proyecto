@@ -1,8 +1,17 @@
 import React, { Fragment } from "react";
 import PrivateRoute from "../PrivateRoute";
+import { Link } from "react-router-dom";
 
-const SecurityRouter = () => {
-  return <Fragment></Fragment>;
+export const SecurityNav = () => {
+  return (
+    <Fragment>
+      <Link className='nav-link' to='/'>
+        SecurityNav
+      </Link>
+    </Fragment>
+  );
 };
 
-export default SecurityRouter;
+export const SecurityRouter = () => {
+  return <Fragment></Fragment>;
+};

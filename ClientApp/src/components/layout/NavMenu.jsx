@@ -4,11 +4,13 @@ import AppContext from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import AdminNav from "../../pages/admin/navigation/AdminNav";
-import MaintenanceNav from "../../pages/maintenance/navigation/MaintenanceNav";
-import SecurityNav from "../../pages/security/navigation/SecurityNav";
-import ConsecutiveNav from "../../pages/consecutive/navigation/ConsecutiveNav";
-import CustomerNav from "../../pages/customer/navigation/CustomerNav";
+import {
+  AdminNav,
+  MaintenanceNav,
+  SecurityNav,
+  ConsecutiveNav,
+  CustomerNav,
+} from "../../router/routers";
 
 const NavMenu = () => {
   const { user } = useContext(AppContext);

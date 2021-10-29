@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import tickets from "../../components/assets/img/ilustrations/tickets.png";
+import tickets from "../../../assets/img/ilustrations/tickets.png";
 import { Container } from "react-bootstrap";
 
 const Hero = () => {

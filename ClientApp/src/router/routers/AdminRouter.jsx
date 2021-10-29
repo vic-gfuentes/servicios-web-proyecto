@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import PrivateRoute from "../PrivateRoute";
+import { Link } from "react-router-dom";
 import {
   AddConsecutive,
   EditConsecutive,
@@ -12,7 +13,23 @@ import {
   ListCountry,
 } from "../../components/countries";
 
-const AdminRouter = () => {
+export const AdminNav = () => {
+  return (
+    <Fragment>
+      <Link className='nav-link' to='/users'>
+        Usuarios
+      </Link>
+      <Link className='nav-link' to='/consecutives'>
+        Consecutivos
+      </Link>
+      <Link className='nav-link' to='/countries'>
+        Paises
+      </Link>
+    </Fragment>
+  );
+};
+
+export const AdminRouter = () => {
   return (
     <Fragment>
       <PrivateRoute exact path='/consecutives' component={ListConsecutive} />
@@ -29,5 +46,3 @@ const AdminRouter = () => {
     </Fragment>
   );
 };
-
-export default AdminRouter;
