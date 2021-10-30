@@ -16,5 +16,6 @@ namespace servicios_web_proyecto.Models
         public User User { get; set; }
         public Airline Airline { get; set; }
         public Flight Flight { get; set; }
+        public PaymentsAccount PaymentsAccount { get; set; }
     }
 }
