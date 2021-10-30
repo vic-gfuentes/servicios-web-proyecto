@@ -10,8 +10,8 @@ using servicios_web_proyecto.Context;
 namespace servicios_web_proyecto.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211021040426_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20211030194830_EncryptedDatabase")]
+    partial class EncryptedDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,6 +143,35 @@ namespace servicios_web_proyecto.Migrations
                     b.ToTable("Flights");
                 });
 
+            modelBuilder.Entity("servicios_web_proyecto.Models.PaymentsAccount", b =>
+                {
+                    b.Property<int>("PaymentsAccountId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AccountNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AccountPassword")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CVV")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PaymentsAccountId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PaymentsAccounts");
+                });
+
             modelBuilder.Entity("servicios_web_proyecto.Models.Port", b =>
                 {
                     b.Property<string>("PortId")
@@ -175,6 +204,9 @@ namespace servicios_web_proyecto.Migrations
                     b.Property<string>("FlightId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("PaymentsAccountId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -186,6 +218,8 @@ namespace servicios_web_proyecto.Migrations
                     b.HasIndex("AirlineId");
 
                     b.HasIndex("FlightId");
+
+                    b.HasIndex("PaymentsAccountId");
 
                     b.HasIndex("UserId");
 
@@ -221,7 +255,7 @@ namespace servicios_web_proyecto.Migrations
                             UserId = 1,
                             Email = "admin@email.com",
                             Name = "Admin",
-                            Password = "password",
+                            Password = "SADQ4ts8pFEZVYZXW5L+XQ==",
                             Role = 1
                         });
                 });
@@ -250,6 +284,15 @@ namespace servicios_web_proyecto.Migrations
                     b.Navigation("Port");
                 });
 
+            modelBuilder.Entity("servicios_web_proyecto.Models.PaymentsAccount", b =>
+                {
+                    b.HasOne("servicios_web_proyecto.Models.User", "User")
+                        .WithMany("PaymentsAccounts")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("servicios_web_proyecto.Models.Port", b =>
                 {
                     b.HasOne("servicios_web_proyecto.Models.Airline", "Airline")
@@ -269,6 +312,10 @@ namespace servicios_web_proyecto.Migrations
                         .WithMany()
                         .HasForeignKey("FlightId");
 
+                    b.HasOne("servicios_web_proyecto.Models.PaymentsAccount", "PaymentsAccount")
+                        .WithMany()
+                        .HasForeignKey("PaymentsAccountId");
+
                     b.HasOne("servicios_web_proyecto.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -277,12 +324,19 @@ namespace servicios_web_proyecto.Migrations
 
                     b.Navigation("Flight");
 
+                    b.Navigation("PaymentsAccount");
+
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("servicios_web_proyecto.Models.Airline", b =>
                 {
                     b.Navigation("Ports");
+                });
+
+            modelBuilder.Entity("servicios_web_proyecto.Models.User", b =>
+                {
+                    b.Navigation("PaymentsAccounts");
                 });
 #pragma warning restore 612, 618
         }

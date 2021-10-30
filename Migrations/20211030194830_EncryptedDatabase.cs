@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace servicios_web_proyecto.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class EncryptedDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -85,6 +85,29 @@ namespace servicios_web_proyecto.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PaymentsAccounts",
+                columns: table => new
+                {
+                    PaymentsAccountId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    CVV = table.Column<int>(type: "int", nullable: true),
+                    AccountPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentsAccounts", x => x.PaymentsAccountId);
+                    table.ForeignKey(
+                        name: "FK_PaymentsAccounts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ports",
                 columns: table => new
                 {
@@ -141,7 +164,8 @@ namespace servicios_web_proyecto.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     AirlineId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    FlightId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    FlightId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    PaymentsAccountId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -157,6 +181,12 @@ namespace servicios_web_proyecto.Migrations
                         column: x => x.FlightId,
                         principalTable: "Flights",
                         principalColumn: "FlightId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reservations_PaymentsAccounts_PaymentsAccountId",
+                        column: x => x.PaymentsAccountId,
+                        principalTable: "PaymentsAccounts",
+                        principalColumn: "PaymentsAccountId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Reservations_Users_UserId",
@@ -179,7 +209,7 @@ namespace servicios_web_proyecto.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Email", "Name", "Password", "Role" },
-                values: new object[] { 1, "admin@email.com", "Admin", "password", 1 });
+                values: new object[] { 1, "admin@email.com", "Admin", "SADQ4ts8pFEZVYZXW5L+XQ==", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Airlines_LocationCountryId",
@@ -197,6 +227,11 @@ namespace servicios_web_proyecto.Migrations
                 column: "PortId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PaymentsAccounts_UserId",
+                table: "PaymentsAccounts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ports_AirlineId",
                 table: "Ports",
                 column: "AirlineId");
@@ -210,6 +245,11 @@ namespace servicios_web_proyecto.Migrations
                 name: "IX_Reservations_FlightId",
                 table: "Reservations",
                 column: "FlightId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_PaymentsAccountId",
+                table: "Reservations",
+                column: "PaymentsAccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservations_UserId",
@@ -232,10 +272,13 @@ namespace servicios_web_proyecto.Migrations
                 name: "Flights");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "PaymentsAccounts");
 
             migrationBuilder.DropTable(
                 name: "Ports");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Airlines");
