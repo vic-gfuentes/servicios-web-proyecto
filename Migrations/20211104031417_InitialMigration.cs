@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace servicios_web_proyecto.Migrations
 {
-    public partial class DataStructure : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -195,7 +195,7 @@ namespace servicios_web_proyecto.Migrations
             migrationBuilder.InsertData(
                 table: "Flights",
                 columns: new[] { "FlightId", "Date", "Destination", "Origin", "PortId", "Status", "TicketPrice" },
-                values: new object[] { "CT-3", new DateTime(2021, 11, 3, 19, 42, 54, 150, DateTimeKind.Local).AddTicks(2721), "Colombia", "Costa Rica", null, 1, 1000.0 });
+                values: new object[] { "CT-3", new DateTime(2021, 11, 3, 21, 14, 17, 124, DateTimeKind.Local).AddTicks(4163), "Colombia", "Costa Rica", null, 1, 1000.0 });
 
             migrationBuilder.InsertData(
                 table: "PaymentsAccounts",

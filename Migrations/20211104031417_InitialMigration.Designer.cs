@@ -10,8 +10,8 @@ using servicios_web_proyecto.Context;
 namespace servicios_web_proyecto.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211104014254_DataStructure")]
-    partial class DataStructure
+    [Migration("20211104031417_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -151,7 +151,7 @@ namespace servicios_web_proyecto.Migrations
                         new
                         {
                             FlightId = "CT-3",
-                            Date = new DateTime(2021, 11, 3, 19, 42, 54, 150, DateTimeKind.Local).AddTicks(2721),
+                            Date = new DateTime(2021, 11, 3, 21, 14, 17, 124, DateTimeKind.Local).AddTicks(4163),
                             Destination = "Colombia",
                             Origin = "Costa Rica",
                             Status = 1,

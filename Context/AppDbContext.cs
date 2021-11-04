@@ -111,7 +111,7 @@ namespace servicios_web_proyecto.Context
                 {
                     ReservationId = "CT-4",
                     Tickets = 2,
-                    Status = Models.Attributes.ReservationStatus.Payed
+                    Status = Models.Attributes.ReservationStatus.Paid
                 }
             );
 
