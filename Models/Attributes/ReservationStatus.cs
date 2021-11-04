@@ -7,7 +7,7 @@ namespace servicios_web_proyecto.Models.Attributes
 {
     public enum ReservationStatus
     {
-        Payed = 1,
+        Paid = 1,
         Pending = 2,
         Cancelled = 3
     }
