@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using servicios_web_proyecto.Context;
+using servicios_web_proyecto.DAO;
 using servicios_web_proyecto.Models;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace servicios_web_proyecto.Controllers
         {
             try
             {
-                return Ok(_context.PaymentsAccounts.ToList());
+                return Ok(_context.PaymentsAccounts.Include(u => u.User).AsNoTracking().ToList());
             }
             catch (Exception ex)
             {
@@ -41,7 +42,7 @@ namespace servicios_web_proyecto.Controllers
         {
             try
             {
-                var paymentsAccount = _context.PaymentsAccounts.First(ct => ct.PaymentsAccountId == id);
+                var paymentsAccount = _context.PaymentsAccounts.Include(u => u.User).AsNoTracking().First(ct => ct.PaymentsAccountId == id);
                 return Ok(paymentsAccount);
             }
             catch (Exception ex)
@@ -51,15 +52,24 @@ namespace servicios_web_proyecto.Controllers
         }
 
         // POST api/<PaymentsAccountsController>
-        [HttpPost("{prefix?}")]
-        public ActionResult Post([FromBody] PaymentsAccount paymentsAccount, [FromRoute] string prefix = "CT")
+        [HttpPost]
+        public ActionResult Post([FromBody] PaymentsAccountDAO paymentsAccountDAO)
         {
             try
             {
-                //var consecutive = _context.Consecutives.Single(consec => consec.Prefix == prefix);
-                //paymentsAccount.PaymentsAccountId = consecutive.GetConsecutiveCode();
+                var paymentsAccount = new PaymentsAccount();
+                var user = _context.Users.Single(item => item.UserId == paymentsAccountDAO.UserId);
+
+                paymentsAccount.AccountNumber = paymentsAccountDAO.AccountNumber;
+                paymentsAccount.Type = paymentsAccountDAO.Type;
+                paymentsAccount.CVV = paymentsAccountDAO.CVV;
+                paymentsAccount.AccountPassword = paymentsAccountDAO.AccountPassword;
+                paymentsAccount.User = user;
+
                 _context.PaymentsAccounts.Add(paymentsAccount);
                 _context.SaveChanges();
+                Binnacle.LogRecord(_context, "add", paymentsAccountDAO);
+
                 return CreatedAtRoute("GetPaymentsAccount", new { id = paymentsAccount.PaymentsAccountId }, paymentsAccount);
             }
             catch (Exception ex)
@@ -70,14 +80,25 @@ namespace servicios_web_proyecto.Controllers
 
         // PUT api/<PaymentsAccountsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] PaymentsAccount paymentsAccount)
+        public ActionResult Put(int id, [FromBody] PaymentsAccountDAO paymentsAccountDAO)
         {
             try
             {
-                if (paymentsAccount.PaymentsAccountId == id)
+                if (paymentsAccountDAO.PaymentsAccountId == id)
                 {
+                    var paymentsAccount = _context.PaymentsAccounts.Single(item => item.PaymentsAccountId == paymentsAccountDAO.PaymentsAccountId);
+                    var user = _context.Users.Single(item => item.UserId == paymentsAccountDAO.UserId);
+
+                    paymentsAccount.AccountNumber = paymentsAccountDAO.AccountNumber;
+                    paymentsAccount.Type = paymentsAccountDAO.Type;
+                    paymentsAccount.CVV = paymentsAccountDAO.CVV;
+                    paymentsAccount.AccountPassword = paymentsAccountDAO.AccountPassword;
+                    paymentsAccount.User = user;
+
                     _context.Entry(paymentsAccount).State = EntityState.Modified;
                     _context.SaveChanges();
+                    Binnacle.LogRecord(_context, "update", paymentsAccountDAO);
+
                     return CreatedAtRoute("GetPaymentsAccount", new { id = paymentsAccount.PaymentsAccountId }, paymentsAccount);
                 }
                 else
@@ -102,6 +123,8 @@ namespace servicios_web_proyecto.Controllers
                 {
                     _context.PaymentsAccounts.Remove(paymentsAccount);
                     _context.SaveChanges();
+                    Binnacle.LogRecord(_context, "delete", paymentsAccount);
+
                     return Ok(paymentsAccount);
                 }
                 else

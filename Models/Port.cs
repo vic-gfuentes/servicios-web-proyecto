@@ -10,7 +10,6 @@ namespace servicios_web_proyecto.Models
     public class Port
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Required]
         public string PortId { get; set; }
         public int Number { get; set; }
         public bool Available { get; set; }

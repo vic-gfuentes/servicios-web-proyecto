@@ -47,13 +47,24 @@ namespace servicios_web_proyecto.Context
                 }
             );
 
+            modelBuilder.Entity<PaymentsAccount>().HasData(
+                new PaymentsAccount
+                {
+                    PaymentsAccountId = 1,
+                    AccountNumber = "123123",
+                    AccountPassword = "",
+                    CVV = 123,
+                    Type = Models.Attributes.PaymentType.Card
+                }
+            );
+
             modelBuilder.Entity<Consecutive>().HasData(
                 new Consecutive
                 {
                     ConsecutiveId = 1,
-                    Name = "Countries",
+                    Name = "Default",
                     Prefix = "CT",
-                    Value = 1
+                    Value = 5
                 }
             );
 
@@ -65,6 +76,46 @@ namespace servicios_web_proyecto.Context
                     ISO = "CR"
                 }
             );
+
+            modelBuilder.Entity<Airline>().HasData(
+                new Airline
+                {
+                    AirlineId = "CT-1",
+                    Name = "Costa Rican Airlines",
+                }
+            );
+
+            modelBuilder.Entity<Port>().HasData(
+                new Port
+                {
+                    PortId = "CT-2",
+                    Available = true,
+                    Number = 1
+                }
+            );
+
+            modelBuilder.Entity<Flight>().HasData(
+                new Flight
+                {
+                    FlightId = "CT-3",
+                    Date = DateTime.Now,
+                    Origin = "Costa Rica",
+                    Destination = "Colombia",
+                    TicketPrice = 1000,
+                    Status = Models.Attributes.FlightStatus.Departed
+                }
+            );
+
+            modelBuilder.Entity<Reservation>().HasData(
+                new Reservation
+                {
+                    ReservationId = "CT-4",
+                    Tickets = 2,
+                    Status = Models.Attributes.ReservationStatus.Payed
+                }
+            );
+
+
         }
 
         public static byte[] StringToByteArray(string hex)

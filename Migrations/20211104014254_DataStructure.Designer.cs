@@ -10,8 +10,8 @@ using servicios_web_proyecto.Context;
 namespace servicios_web_proyecto.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211030194830_EncryptedDatabase")]
-    partial class EncryptedDatabase
+    [Migration("20211104014254_DataStructure")]
+    partial class DataStructure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,7 +26,7 @@ namespace servicios_web_proyecto.Migrations
                     b.Property<string>("AirlineId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("LocationCountryId")
+                    b.Property<string>("CountryId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
@@ -34,9 +34,16 @@ namespace servicios_web_proyecto.Migrations
 
                     b.HasKey("AirlineId");
 
-                    b.HasIndex("LocationCountryId");
+                    b.HasIndex("CountryId");
 
                     b.ToTable("Airlines");
+
+                    b.HasData(
+                        new
+                        {
+                            AirlineId = "CT-1",
+                            Name = "Costa Rican Airlines"
+                        });
                 });
 
             modelBuilder.Entity("servicios_web_proyecto.Models.Binnacle", b =>
@@ -81,9 +88,9 @@ namespace servicios_web_proyecto.Migrations
                         new
                         {
                             ConsecutiveId = 1,
-                            Name = "Countries",
+                            Name = "Default",
                             Prefix = "CT",
-                            Value = 1
+                            Value = 5
                         });
                 });
 
@@ -116,9 +123,6 @@ namespace servicios_web_proyecto.Migrations
                     b.Property<string>("FlightId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AirlineId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -134,13 +138,25 @@ namespace servicios_web_proyecto.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("FlightId");
+                    b.Property<double>("TicketPrice")
+                        .HasColumnType("float");
 
-                    b.HasIndex("AirlineId");
+                    b.HasKey("FlightId");
 
                     b.HasIndex("PortId");
 
                     b.ToTable("Flights");
+
+                    b.HasData(
+                        new
+                        {
+                            FlightId = "CT-3",
+                            Date = new DateTime(2021, 11, 3, 19, 42, 54, 150, DateTimeKind.Local).AddTicks(2721),
+                            Destination = "Colombia",
+                            Origin = "Costa Rica",
+                            Status = 1,
+                            TicketPrice = 1000.0
+                        });
                 });
 
             modelBuilder.Entity("servicios_web_proyecto.Models.PaymentsAccount", b =>
@@ -170,6 +186,15 @@ namespace servicios_web_proyecto.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("PaymentsAccounts");
+
+                    b.HasData(
+                        new
+                        {
+                            PaymentsAccountId = 1,
+                            AccountNumber = "j5eELL2QiNzIhdZFiHb0zA==",
+                            CVV = 123,
+                            Type = 2
+                        });
                 });
 
             modelBuilder.Entity("servicios_web_proyecto.Models.Port", b =>
@@ -191,14 +216,19 @@ namespace servicios_web_proyecto.Migrations
                     b.HasIndex("AirlineId");
 
                     b.ToTable("Ports");
+
+                    b.HasData(
+                        new
+                        {
+                            PortId = "CT-2",
+                            Available = true,
+                            Number = 1
+                        });
                 });
 
             modelBuilder.Entity("servicios_web_proyecto.Models.Reservation", b =>
                 {
                     b.Property<string>("ReservationId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AirlineId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FlightId")
@@ -210,20 +240,24 @@ namespace servicios_web_proyecto.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("Tickets")
                         .HasColumnType("int");
 
                     b.HasKey("ReservationId");
-
-                    b.HasIndex("AirlineId");
 
                     b.HasIndex("FlightId");
 
                     b.HasIndex("PaymentsAccountId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Reservations");
+
+                    b.HasData(
+                        new
+                        {
+                            ReservationId = "CT-4",
+                            Status = 1,
+                            Tickets = 2
+                        });
                 });
 
             modelBuilder.Entity("servicios_web_proyecto.Models.User", b =>
@@ -262,24 +296,18 @@ namespace servicios_web_proyecto.Migrations
 
             modelBuilder.Entity("servicios_web_proyecto.Models.Airline", b =>
                 {
-                    b.HasOne("servicios_web_proyecto.Models.Country", "Location")
+                    b.HasOne("servicios_web_proyecto.Models.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("LocationCountryId");
+                        .HasForeignKey("CountryId");
 
-                    b.Navigation("Location");
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("servicios_web_proyecto.Models.Flight", b =>
                 {
-                    b.HasOne("servicios_web_proyecto.Models.Airline", "Airline")
-                        .WithMany()
-                        .HasForeignKey("AirlineId");
-
                     b.HasOne("servicios_web_proyecto.Models.Port", "Port")
                         .WithMany()
                         .HasForeignKey("PortId");
-
-                    b.Navigation("Airline");
 
                     b.Navigation("Port");
                 });
@@ -304,10 +332,6 @@ namespace servicios_web_proyecto.Migrations
 
             modelBuilder.Entity("servicios_web_proyecto.Models.Reservation", b =>
                 {
-                    b.HasOne("servicios_web_proyecto.Models.Airline", "Airline")
-                        .WithMany()
-                        .HasForeignKey("AirlineId");
-
                     b.HasOne("servicios_web_proyecto.Models.Flight", "Flight")
                         .WithMany()
                         .HasForeignKey("FlightId");
@@ -316,17 +340,9 @@ namespace servicios_web_proyecto.Migrations
                         .WithMany()
                         .HasForeignKey("PaymentsAccountId");
 
-                    b.HasOne("servicios_web_proyecto.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Airline");
-
                     b.Navigation("Flight");
 
                     b.Navigation("PaymentsAccount");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("servicios_web_proyecto.Models.Airline", b =>

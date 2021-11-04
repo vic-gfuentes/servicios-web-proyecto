@@ -51,13 +51,11 @@ namespace servicios_web_proyecto.Controllers
         }
 
         // POST api/<BinnaclesController>
-        [HttpPost("{prefix?}")]
-        public ActionResult Post([FromBody] Binnacle binnacle, [FromRoute] string prefix = "CT")
+        [HttpPost]
+        public ActionResult Post([FromBody] Binnacle binnacle)
         {
             try
             {
-                //var consecutive = _context.Consecutives.Single(consec => consec.Prefix == prefix);
-                //binnacle.RecordId = consecutive.GetConsecutiveCode();
                 _context.Binnacles.Add(binnacle);
                 _context.SaveChanges();
                 return CreatedAtRoute("GetBinnacle", new { id = binnacle.RecordId }, binnacle);
