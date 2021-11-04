@@ -22,7 +22,11 @@ namespace servicios_web_proyecto
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options => {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.MaxDepth = 32;
+              }
+            ); 
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

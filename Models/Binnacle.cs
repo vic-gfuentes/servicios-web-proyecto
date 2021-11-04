@@ -27,6 +27,7 @@ namespace servicios_web_proyecto.Models
                     log.Log = $"Error with: {obj}";
                     log.Type = BinnacleType.Error;
                     context.Binnacles.Add(log);
+                    context.SaveChanges();
                     break;
                 case "add":
                     log.Log = $"Added: {obj}";
@@ -37,11 +38,13 @@ namespace servicios_web_proyecto.Models
                     log.Log = $"Updated: {obj}";
                     log.Type = BinnacleType.Update;
                     context.Binnacles.Add(log);
+                    context.SaveChanges();
                     break;
                 case "delete":
                     log.Log = $"Deleted: {obj}";
                     log.Type = BinnacleType.Delete;
                     context.Binnacles.Add(log);
+                    context.SaveChanges();
                     break;
                 default:
                     break;

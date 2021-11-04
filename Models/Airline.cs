@@ -10,10 +10,9 @@ namespace servicios_web_proyecto.Models
     public class Airline
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Required]
         public string AirlineId { get; set; }
         public string Name { get; set; }
-        public Country Location { get; set; }
+        public Country Country { get; set; }
         public List<Port> Ports { get; set; }
     }
 }

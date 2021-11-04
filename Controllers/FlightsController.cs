@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using servicios_web_proyecto.Context;
+using servicios_web_proyecto.DAO;
 using servicios_web_proyecto.Models;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,10 @@ namespace servicios_web_proyecto.Controllers
         {
             try
             {
-                return Ok(_context.Flights.ToList());
+                return Ok(_context.Flights.Include(p => p.Port)
+                    .ThenInclude(a => a.Airline)
+                    .ThenInclude(c => c.Country)
+                    .ToList());
             }
             catch (Exception ex)
             {
@@ -40,8 +44,11 @@ namespace servicios_web_proyecto.Controllers
         {
             try
             {
-                var flights = _context.Flights.First(ct => ct.FlightId == id);
-                return Ok(flights);
+                var flight = _context.Flights.Include(p => p.Port).Include(p => p.Port)
+                    .ThenInclude(a => a.Airline)
+                    .ThenInclude(c => c.Country)
+                    .First(ct => ct.FlightId == id);
+                return Ok(flight);
             }
             catch (Exception ex)
             {
@@ -51,14 +58,26 @@ namespace servicios_web_proyecto.Controllers
 
         // POST api/<FlightsController>
         [HttpPost("{prefix?}")]
-        public ActionResult Post([FromBody] Flight flight, [FromRoute] string prefix = "CT")
+        public ActionResult Post([FromBody] FlightDAO flightDAO, [FromRoute] string prefix = "CT")
         {
             try
             {
+                var flight = new Flight();
+                var port = _context.Ports.Single(item => item.PortId == flightDAO.PortId);
                 var consecutive = _context.Consecutives.Single(consec => consec.Prefix == prefix);
+
                 flight.FlightId = consecutive.GetConsecutiveCode();
+                flight.Origin = flightDAO.Origin;
+                flight.Destination = flightDAO.Destination;
+                flight.TicketPrice = flightDAO.TicketPrice;
+                flight.Date = flightDAO.Date;
+                flight.Status = flightDAO.Status;
+                flight.Port = port;
+
                 _context.Flights.Add(flight);
                 _context.SaveChanges();
+                Binnacle.LogRecord(_context, "add", flight);
+
                 return CreatedAtRoute("GetFlight", new { id = flight.FlightId }, flight);
             }
             catch (Exception ex)
@@ -69,14 +88,26 @@ namespace servicios_web_proyecto.Controllers
 
         // PUT api/<FlightsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(string id, [FromBody] Flight flight)
+        public ActionResult Put(string id, [FromBody] FlightDAO flightDAO)
         {
             try
             {
-                if (flight.FlightId == id)
+                if (flightDAO.FlightId == id)
                 {
+                    var flight = _context.Flights.Single(item => item.FlightId == flightDAO.FlightId);
+                    var port = _context.Ports.Single(item => item.PortId == flightDAO.PortId);
+
+                    flight.Origin = flightDAO.Origin;
+                    flight.Destination = flightDAO.Destination;
+                    flight.TicketPrice = flightDAO.TicketPrice;
+                    flight.Date = flightDAO.Date;
+                    flight.Status = flightDAO.Status;
+                    flight.Port = port;
+
                     _context.Entry(flight).State = EntityState.Modified;
                     _context.SaveChanges();
+                    Binnacle.LogRecord(_context, "update", flight);
+
                     return CreatedAtRoute("GetFlight", new { id = flight.FlightId }, flight);
                 }
                 else
@@ -101,6 +132,8 @@ namespace servicios_web_proyecto.Controllers
                 {
                     _context.Flights.Remove(flight);
                     _context.SaveChanges();
+                    Binnacle.LogRecord(_context, "delete", flight);
+
                     return Ok(flight);
                 }
                 else

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using servicios_web_proyecto.Context;
+using servicios_web_proyecto.DAO;
 using servicios_web_proyecto.Models;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace servicios_web_proyecto.Controllers
         {
             try
             {
-                return Ok(_context.Airlines.ToList());
+                return Ok(_context.Airlines.Include(c => c.Country).ToList());
             }
             catch (Exception ex)
             {
@@ -40,7 +41,7 @@ namespace servicios_web_proyecto.Controllers
         {
             try
             {
-                var airline = _context.Airlines.First(ct => ct.AirlineId == id);
+                var airline = _context.Airlines.Include(c => c.Country).First(ct => ct.AirlineId == id);
                 return Ok(airline);
             }
             catch (Exception ex)
@@ -51,15 +52,23 @@ namespace servicios_web_proyecto.Controllers
 
         // POST api/<AirlinesController>
         [HttpPost("{prefix?}")]
-        public ActionResult Post([FromBody] Airline Airline, [FromRoute] string prefix = "CT")
+        public ActionResult Post([FromBody] AirlineDAO airlineDAO, [FromRoute] string prefix = "CT")
         {
             try
             {
+                var airline = new Airline();
+                var country = _context.Countries.Single(item => item.CountryId == airlineDAO.CountryId);
                 var consecutive = _context.Consecutives.Single(consec => consec.Prefix == prefix);
-                Airline.AirlineId = consecutive.GetConsecutiveCode();
-                _context.Airlines.Add(Airline);
+
+                airline.AirlineId = consecutive.GetConsecutiveCode();
+                airline.Name = airlineDAO.Name;
+                airline.Country = country;
+
+                _context.Airlines.Add(airline);
                 _context.SaveChanges();
-                return CreatedAtRoute("GetAirline", new { id = Airline.AirlineId }, Airline);
+                Binnacle.LogRecord(_context, "add", airline);
+
+                return CreatedAtRoute("GetAirline", new { id = airline.AirlineId }, airline);
             }
             catch (Exception ex)
             {
@@ -69,14 +78,22 @@ namespace servicios_web_proyecto.Controllers
 
         // PUT api/<AirlinesController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(string id, [FromBody] Airline airline)
+        public ActionResult Put(string id, [FromBody] AirlineDAO airlineDAO)
         {
             try
             {
-                if (airline.AirlineId == id)
+                if (airlineDAO.AirlineId == id)
                 {
+                    var airline = _context.Airlines.Single(item => item.AirlineId == airlineDAO.AirlineId);
+                    var country = _context.Countries.Single(item => item.CountryId == airlineDAO.CountryId);
+
+                    airline.Name = airlineDAO.Name;
+                    airline.Country = country;
+
                     _context.Entry(airline).State = EntityState.Modified;
                     _context.SaveChanges();
+                    Binnacle.LogRecord(_context, "update", airline);
+
                     return CreatedAtRoute("GetAirline", new { id = airline.AirlineId }, airline);
                 }
                 else
@@ -101,6 +118,8 @@ namespace servicios_web_proyecto.Controllers
                 {
                     _context.Airlines.Remove(airline);
                     _context.SaveChanges();
+                    Binnacle.LogRecord(_context, "delete", airline);
+
                     return Ok(airline);
                 }
                 else
