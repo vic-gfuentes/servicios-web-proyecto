@@ -43,7 +43,7 @@ namespace servicios_web_proyecto.Controllers
         {
             try
             {
-                var port = _context.Ports.AsNoTracking().First(ct => ct.PortId == id);
+                var port = _context.Ports.Include(a => a.Airline).AsNoTracking().First(ct => ct.PortId == id);
                 return Ok(port);
             }
             catch (Exception ex)

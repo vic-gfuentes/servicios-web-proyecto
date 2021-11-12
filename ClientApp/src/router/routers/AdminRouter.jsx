@@ -12,6 +12,11 @@ import {
   EditCountry,
   ListCountry,
 } from "../../components/countries";
+import {
+  AddAirline,
+  EditAirline,
+  ListAirline,
+} from "../../components/airlines";
 
 export const AdminNav = () => {
   return (
@@ -24,6 +29,9 @@ export const AdminNav = () => {
       </Link>
       <Link className='nav-link' to='/countries'>
         Paises
+      </Link>
+      <Link className='nav-link' to='/airlines'>
+        Aereolineas
       </Link>
     </Fragment>
   );
@@ -43,6 +51,10 @@ export const AdminRouter = () => {
       <PrivateRoute exact path='/countries' component={ListCountry} />
       <PrivateRoute path='/countries/edit/:id' component={EditCountry} />
       <PrivateRoute exact path='/countries/new' component={AddCountry} />
+
+      <PrivateRoute exact path='/airlines' component={ListAirline} />
+      <PrivateRoute path='/airlines/edit/:id' component={EditAirline} />
+      <PrivateRoute exact path='/airlines/new' component={AddAirline} />
     </Fragment>
   );
 };

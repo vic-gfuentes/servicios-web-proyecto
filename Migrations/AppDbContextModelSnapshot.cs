@@ -149,7 +149,7 @@ namespace servicios_web_proyecto.Migrations
                         new
                         {
                             FlightId = "CT-3",
-                            Date = new DateTime(2021, 11, 3, 21, 14, 17, 124, DateTimeKind.Local).AddTicks(4163),
+                            Date = new DateTime(2021, 11, 11, 21, 5, 47, 58, DateTimeKind.Local).AddTicks(5405),
                             Destination = "Colombia",
                             Origin = "Costa Rica",
                             Status = 1,
@@ -209,6 +209,9 @@ namespace servicios_web_proyecto.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
                     b.HasKey("PortId");
 
                     b.HasIndex("AirlineId");
@@ -220,7 +223,8 @@ namespace servicios_web_proyecto.Migrations
                         {
                             PortId = "CT-2",
                             Available = true,
-                            Number = 1
+                            Number = 1,
+                            Type = 1
                         });
                 });
 

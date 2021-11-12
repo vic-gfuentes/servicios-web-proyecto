@@ -112,5 +112,11 @@ namespace servicios_web_proyecto.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("/deletes")]
+        public ActionResult FilterDeletes()
+        {
+            return Ok("test");
+        }
     }
 }

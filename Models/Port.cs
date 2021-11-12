@@ -1,4 +1,5 @@
-﻿using System;
+﻿using servicios_web_proyecto.Models.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,6 +14,7 @@ namespace servicios_web_proyecto.Models
         public string PortId { get; set; }
         public int Number { get; set; }
         public bool Available { get; set; }
+        public PortType Type { get; set; }
         public Airline Airline { get; set; }
     }
 }
