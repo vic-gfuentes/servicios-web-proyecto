@@ -114,6 +114,7 @@ namespace servicios_web_proyecto.Migrations
                     PortId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Number = table.Column<int>(type: "int", nullable: false),
                     Available = table.Column<bool>(type: "bit", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     AirlineId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -195,7 +196,7 @@ namespace servicios_web_proyecto.Migrations
             migrationBuilder.InsertData(
                 table: "Flights",
                 columns: new[] { "FlightId", "Date", "Destination", "Origin", "PortId", "Status", "TicketPrice" },
-                values: new object[] { "CT-3", new DateTime(2021, 11, 3, 21, 14, 17, 124, DateTimeKind.Local).AddTicks(4163), "Colombia", "Costa Rica", null, 1, 1000.0 });
+                values: new object[] { "CT-3", new DateTime(2021, 11, 11, 21, 5, 47, 58, DateTimeKind.Local).AddTicks(5405), "Colombia", "Costa Rica", null, 1, 1000.0 });
 
             migrationBuilder.InsertData(
                 table: "PaymentsAccounts",
@@ -204,8 +205,8 @@ namespace servicios_web_proyecto.Migrations
 
             migrationBuilder.InsertData(
                 table: "Ports",
-                columns: new[] { "PortId", "AirlineId", "Available", "Number" },
-                values: new object[] { "CT-2", null, true, 1 });
+                columns: new[] { "PortId", "AirlineId", "Available", "Number", "Type" },
+                values: new object[] { "CT-2", null, true, 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "Reservations",

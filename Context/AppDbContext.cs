@@ -90,6 +90,7 @@ namespace servicios_web_proyecto.Context
                 {
                     PortId = "CT-2",
                     Available = true,
+                    Type = Models.Attributes.PortType.In,
                     Number = 1
                 }
             );

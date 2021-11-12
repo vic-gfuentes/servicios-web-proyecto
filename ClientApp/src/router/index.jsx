@@ -5,6 +5,7 @@ import Landing from "../components/layout/pages/landing";
 import LogIn from "../components/layout/pages/auth/LogIn";
 import Register from "../components/layout/pages/auth/Register";
 import Dashboard from "../components/layout/Dashboard";
+import Profile from "../components/layout/pages/profile";
 import {
   AdminRouter,
   MaintenanceRouter,
@@ -48,6 +49,7 @@ const Routes = () => {
       <Route path='/register' component={Register} />
       <Switch>
         <Route exact path='/dashboard' component={Dashboard} />
+        <Route exact path='/profile' component={Profile} />
         {addRoutesBasedOnRole()}
       </Switch>
     </Fragment>

@@ -41,7 +41,7 @@ namespace servicios_web_proyecto.Controllers
         {
             try
             {
-                var airline = _context.Airlines.Include(c => c.Country).First(ct => ct.AirlineId == id);
+                var airline = _context.Airlines.Include(c => c.Country).Include(p => p.Ports).First(ct => ct.AirlineId == id);
                 return Ok(airline);
             }
             catch (Exception ex)
