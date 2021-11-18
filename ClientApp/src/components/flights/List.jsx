@@ -47,19 +47,18 @@ const ListFlights = () => {
   const serialize = (status) => {
     switch (status) {
       case 0:
-        return 'Cancelado';
+        return "Cancelado";
       case 1:
-        return 'Salida';
+        return "Salida";
       case 2:
-        return 'Llegada';
+        return "Llegada";
       case 3:
-        return 'Tarde';
+        return "Tarde";
       case 5:
-      default: break;
+      default:
+        break;
     }
-
-  }
-
+  };
 
   return (
     <Container className='py-3'>
@@ -83,12 +82,12 @@ const ListFlights = () => {
             {flights.map((item) => (
               <tr key={item.flightId}>
                 <td>{item.flightId}</td>
-                    <td>{item.origin}</td>
-                    <td>{item.destination}</td>
-                    <td>{item.ticketPrice}</td>
-                    <td>{item.date}</td>
-                    <td>{serialize(item.status)}</td>
-                    <td>{item.port.number}</td>
+                <td>{item.origin}</td>
+                <td>{item.destination}</td>
+                <td>{item.ticketPrice}</td>
+                <td>{item.date}</td>
+                <td>{serialize(item.status)}</td>
+                <td>{item.port.number || "---"}</td>
                 <td>
                   <Button
                     className='mx-2'

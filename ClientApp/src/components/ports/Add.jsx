@@ -6,8 +6,8 @@ const AddPort = () => {
   const history = useHistory();
   const [port, setPort] = useState({
     number: "",
-    available: "",
-    type: "",
+    available: true,
+    type: 1,
     airlineId: "",
   });
   const [consec, setConsec] = useState({});
@@ -46,6 +46,23 @@ const AddPort = () => {
     setConsec(e.target.value);
   };
 
+  const handleAvailableToggle = (e) => {
+    const { id, checked } = e.target;
+
+    setPort({
+      ...port,
+      [id]: checked,
+    });
+  };
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    setPort({
+      ...port,
+      [name]: parseInt(value),
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch(`/api/ports/${consec}`, {
@@ -68,22 +85,6 @@ const AddPort = () => {
     history.push("/ports");
   };
 
-  const handleSelectChange = (e) => {
-    const { name, value } = e.target;
-    setPort({
-      ...port,
-      [name]: value,
-    });
-  };
-
-  const handleSelectChangeType = (e) => {
-    const { name, value } = e.target;
-    setPort({
-      ...port,
-      [name]: parseInt(value),
-    });
-  };
-
   return (
     <Container className='py-3'>
       <div className='bg-secondary p-5'>
@@ -100,17 +101,14 @@ const AddPort = () => {
             />
           </Form.Group>
 
-          <Form.Group>
-            <Form.Label>Disponible</Form.Label>
-            <Form.Control
-              as='select'
-              value={port.available}
-              onChange={handleSelectChange}
-              name='available'
-            >
-              <option value={true}>Si</option>
-              <option value={false}>No</option>
-            </Form.Control>
+          <Form.Group className='mb-3 mt-3' controlId='available'>
+            <Form.Check
+              type='checkbox'
+              label='Disponible'
+              id='available'
+              checked={port.available}
+              onChange={handleAvailableToggle}
+            />
           </Form.Group>
 
           <Form.Group>
@@ -118,7 +116,7 @@ const AddPort = () => {
             <Form.Control
               as='select'
               value={port.type}
-              onChange={handleSelectChangeType}
+              onChange={handleSelectChange}
               name='type'
             >
               <option value={1}>Entrada</option>

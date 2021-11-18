@@ -130,7 +130,10 @@ const EditReservation = () => {
               name='paymentsAccountId'
             >
               {paymentsAccount.map((item) => (
-                <option key={item.paymentsAccountId} value={item.paymentsAccountId}>
+                <option
+                  key={item.paymentsAccountId}
+                  value={item.paymentsAccountId}
+                >
                   {item.paymentsAccountId}
                 </option>
               ))}

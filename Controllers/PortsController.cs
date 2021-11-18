@@ -65,6 +65,7 @@ namespace servicios_web_proyecto.Controllers
                 port.PortId = consecutive.GetConsecutiveCode();
                 port.Number = portDAO.Number;
                 port.Available = portDAO.Available;
+                port.Type = (Models.Attributes.PortType)portDAO.Type;
                 port.Airline = airline;
 
                 _context.Ports.Add(port);
@@ -92,6 +93,7 @@ namespace servicios_web_proyecto.Controllers
 
                     port.Number = portDAO.Number;
                     port.Available = portDAO.Available;
+                    port.Type = (Models.Attributes.PortType)portDAO.Type;
                     port.Airline = airline;
 
                     _context.Entry(port).State = EntityState.Modified;

@@ -28,7 +28,6 @@ const AddFlight = () => {
       .then((data) => setPorts(data));
   }, []);
 
-
   const handleChange = (e) => {
     const { name, value, type } = e.target;
     setFlight({
@@ -36,7 +35,6 @@ const AddFlight = () => {
       [name]: type === "number" ? parseInt(value) : value,
     });
   };
-
 
   const handleConsecutiveChange = (e) => {
     setConsec(e.target.value);
@@ -158,7 +156,6 @@ const AddFlight = () => {
                 </option>
               ))}
             </Form.Control>
-
           </Form.Group>
 
           <Form.Group>

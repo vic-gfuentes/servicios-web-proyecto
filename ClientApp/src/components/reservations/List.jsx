@@ -47,14 +47,15 @@ const ListReservations = () => {
   const serialize = (status) => {
     switch (status) {
       case 1:
-        return 'Pagado';
+        return "Pagado";
       case 2:
-        return 'Pendiente';
+        return "Pendiente";
       case 3:
-        return 'Cancelado';
-      default: break;
+        return "Cancelado";
+      default:
+        break;
     }
-  }
+  };
 
   return (
     <Container className='py-3'>

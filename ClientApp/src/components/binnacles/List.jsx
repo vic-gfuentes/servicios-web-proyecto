@@ -18,11 +18,6 @@ const ListBinnacles = () => {
       .then((data) => setBinnacles(data));
   };
 
-  const onEditClick = (id) => (e) => {
-    e.preventDefault();
-    history.push(`/binnacles/edit/${id}`);
-  };
-
   const onDeleteClick = (id) => (e) => {
     e.preventDefault();
     fetch(`/api/binnacles/${id}`, {
@@ -39,29 +34,38 @@ const ListBinnacles = () => {
       });
   };
 
+  const serialize = (type) => {
+    switch (type) {
+      case 0:
+        return "Error";
+      case 1:
+        return "Add";
+      case 2:
+        return "Update";
+      case 3:
+        return "Delete";
+    }
+  };
+
   return (
-    <Container className='py-3'>
+    <div className='position-absolute h-100 w-100'>
       <div className='bg-secondary p-5'>
         <Table bordered hover>
           <thead>
             <tr>
               <th>ID</th>
-              <th>log</th>
+              <th>Tipo</th>
+              <th>Log</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {binnacles.map((item) => (
-              <tr key={item.BinnacleId}>
-                <td>{item.BinnacleId}</td>
+              <tr key={item.recordId}>
+                <td>{item.recordId}</td>
+                <td>{serialize(item.type)}</td>
                 <td>{item.log}</td>
                 <td>
-                  <Button
-                    className='mx-2'
-                    variant='info'
-                    onClick={onEditClick(item.BinnacleId)}
-                  >
-                    Editar
-                  </Button>
                   <Button
                     className='mx-2'
                     variant='danger'
@@ -75,7 +79,7 @@ const ListBinnacles = () => {
           </tbody>
         </Table>
       </div>
-    </Container>
+    </div>
   );
 };
 

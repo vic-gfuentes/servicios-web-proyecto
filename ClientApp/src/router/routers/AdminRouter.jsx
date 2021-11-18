@@ -18,33 +18,19 @@ import {
   EditAirline,
   ListAirline,
 } from "../../components/airlines";
-import {
-  AddBinnacle,
-  EditBinnacle,
-  ListBinnacle,
-} from "../../components/binnacles";
-import {
-  AddFlight,
-  EditFlight,
-  ListFlight,
-} from "../../components/flights";
+import { ListBinnacle } from "../../components/binnacles";
+import { AddFlight, EditFlight, ListFlight } from "../../components/flights";
 import {
   AddReservation,
   EditReservation,
   ListReservation,
 } from "../../components/reservations";
-import {
-  AddPort,
-  EditPort,
-  ListPort,
-} from "../../components/ports";
-
+import { AddPort, EditPort, ListPort } from "../../components/ports";
 
 export const AdminNav = () => {
   return (
     <Fragment>
-
-      <NavDropdown title="Administrador">
+      <NavDropdown title='Administrador'>
         <Link className='dropdown-item' to='/users'>
           Usuarios
         </Link>
@@ -56,7 +42,7 @@ export const AdminNav = () => {
         </Link>
       </NavDropdown>
 
-      <NavDropdown title="Mantenimiento">
+      <NavDropdown title='Mantenimiento'>
         <Link className='dropdown-item' to='/countries'>
           Paises
         </Link>
@@ -73,7 +59,6 @@ export const AdminNav = () => {
           Puertos
         </Link>
       </NavDropdown>
-
     </Fragment>
   );
 };
@@ -98,8 +83,6 @@ export const AdminRouter = () => {
       <PrivateRoute exact path='/airlines/new' component={AddAirline} />
 
       <PrivateRoute exact path='/binnacles' component={ListBinnacle} />
-      <PrivateRoute path='/binnacles/edit/:id' component={EditBinnacle} />
-      <PrivateRoute exact path='/binnacles/new' component={AddBinnacle} />
 
       <PrivateRoute exact path='/flights' component={ListFlight} />
       <PrivateRoute path='/flights/edit/:id' component={EditFlight} />

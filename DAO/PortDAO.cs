@@ -9,6 +9,7 @@ namespace servicios_web_proyecto.DAO
     {
         public string PortId { get; set; }
         public int Number { get; set; }
+        public int Type { get; set; }
         public bool Available { get; set; }
         public string AirlineId { get; set; }
     }
