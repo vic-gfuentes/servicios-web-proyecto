@@ -2,35 +2,35 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
 
-const ListUsers = () => {
+const ListBinnacles = () => {
   const history = useHistory();
-  const [users, setUsers] = useState([]);
+  const [Binnacles, setBinnacles] = useState([]);
 
   useEffect(() => {
-    fetch("/api/users")
+    fetch("/api/Binnacles")
       .then((response) => response.json())
-      .then((data) => setUsers(data));
+      .then((data) => setBinnacles(data));
   }, []);
 
   const refresh = () => {
-    fetch("/api/users")
+    fetch("/api/Binnacles")
       .then((response) => response.json())
-      .then((data) => setUsers(data));
+      .then((data) => setBinnacles(data));
   };
 
   const onAddClick = (e) => {
     e.preventDefault();
-    history.push("/users/new");
+    history.push("/Binnacles/new");
   };
 
   const onEditClick = (id) => (e) => {
     e.preventDefault();
-    history.push(`/users/edit/${id}`);
+    history.push(`/Binnacles/edit/${id}`);
   };
 
   const onDeleteClick = (id) => (e) => {
     e.preventDefault();
-    fetch(`/api/users/${id}`, {
+    fetch(`/api/Binnacles/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -44,57 +44,33 @@ const ListUsers = () => {
       });
   };
 
-  const serialize = (role) => {
-    switch (role) {
-      case 1:
-        return 'Admin';
-      case 2:
-        return 'Maintenance';
-      case 3:
-        return 'Security';
-      case 4:
-        return 'Consecutive';
-      case 5:
-        return 'Costumer';
-      default: break;
-    }
-  }
-
   return (
     <Container className='py-3'>
       <div className='bg-secondary p-5'>
-        <Button className='mb-4' variant='success' onClick={onAddClick}>
-          Agregar Usuario
-        </Button>
         <Table bordered hover>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Acciones</th>
+              <th>log</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((item) => (
-              <tr key={item.userId}>
-                <td>{item.userId}</td>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{serialize(item.role)}</td>
+            {Binnacles.map((item) => (
+              <tr key={item.BinnacleId}>
+                <td>{item.BinnacleId}</td>
+                <td>{item.log}</td>
                 <td>
                   <Button
                     className='mx-2'
                     variant='info'
-                    onClick={onEditClick(item.userId)}
+                    onClick={onEditClick(item.BinnacleId)}
                   >
                     Editar
                   </Button>
                   <Button
                     className='mx-2'
                     variant='danger'
-                    onClick={onDeleteClick(item.userId)}
+                    onClick={onDeleteClick(item.BinnacleId)}
                   >
                     Eliminar
                   </Button>
@@ -108,4 +84,4 @@ const ListUsers = () => {
   );
 };
 
-export default ListUsers;
+export default ListBinnacles;

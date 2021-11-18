@@ -2,35 +2,35 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
 
-const ListUsers = () => {
+const ListPorts = () => {
   const history = useHistory();
-  const [users, setUsers] = useState([]);
+  const [ports, setPorts] = useState([]);
 
   useEffect(() => {
-    fetch("/api/users")
+    fetch("/api/ports")
       .then((response) => response.json())
-      .then((data) => setUsers(data));
+      .then((data) => setPorts(data));
   }, []);
 
   const refresh = () => {
-    fetch("/api/users")
+    fetch("/api/ports")
       .then((response) => response.json())
-      .then((data) => setUsers(data));
+      .then((data) => setPorts(data));
   };
 
   const onAddClick = (e) => {
     e.preventDefault();
-    history.push("/users/new");
+    history.push("/ports/new");
   };
 
   const onEditClick = (id) => (e) => {
     e.preventDefault();
-    history.push(`/users/edit/${id}`);
+    history.push(`/ports/edit/${id}`);
   };
 
   const onDeleteClick = (id) => (e) => {
     e.preventDefault();
-    fetch(`/api/users/${id}`, {
+    fetch(`/api/ports/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -44,57 +44,64 @@ const ListUsers = () => {
       });
   };
 
-  const serialize = (role) => {
-    switch (role) {
-      case 1:
-        return 'Admin';
-      case 2:
-        return 'Maintenance';
-      case 3:
-        return 'Security';
-      case 4:
-        return 'Consecutive';
-      case 5:
-        return 'Costumer';
+  const serializeAvailable = (available) => {
+    switch (available) {
+      case false:
+        return 'No';
+      case true:
+        return 'Si';
       default: break;
     }
+
+  }
+
+  const serializeType = (Type) => {
+    switch (Type) {
+      case 1:
+        return 'Entrada';
+      case 2:
+        return 'Salida';
+      default: break;
+    }
+
   }
 
   return (
     <Container className='py-3'>
       <div className='bg-secondary p-5'>
         <Button className='mb-4' variant='success' onClick={onAddClick}>
-          Agregar Usuario
+          Agregar puerto
         </Button>
         <Table bordered hover>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Acciones</th>
+              <th>Numero</th>
+              <th>Disponible</th>
+              <th>Tipo</th>
+              <th>Aerolinea</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((item) => (
-              <tr key={item.userId}>
-                <td>{item.userId}</td>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{serialize(item.role)}</td>
+            {ports.map((item) => (
+              <tr key={item.portId}>
+                <td>{item.portId}</td>
+                <td>{item.number}</td>
+                <td>{serializeAvailable(item.available)}</td>
+                <td>{serializeType(item.type)}</td>
+                <td>{item.airline.name}</td>
                 <td>
                   <Button
                     className='mx-2'
                     variant='info'
-                    onClick={onEditClick(item.userId)}
+                    onClick={onEditClick(item.portId)}
                   >
                     Editar
                   </Button>
                   <Button
                     className='mx-2'
                     variant='danger'
-                    onClick={onDeleteClick(item.userId)}
+                    onClick={onDeleteClick(item.portId)}
                   >
                     Eliminar
                   </Button>
@@ -108,4 +115,4 @@ const ListUsers = () => {
   );
 };
 
-export default ListUsers;
+export default ListPorts;
