@@ -2,35 +2,35 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
 
-const ListUsers = () => {
+const ListReservations = () => {
   const history = useHistory();
-  const [users, setUsers] = useState([]);
+  const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
-    fetch("/api/users")
+    fetch("/api/reservations")
       .then((response) => response.json())
-      .then((data) => setUsers(data));
+      .then((data) => setReservations(data));
   }, []);
 
   const refresh = () => {
-    fetch("/api/users")
+    fetch("/api/reservations")
       .then((response) => response.json())
-      .then((data) => setUsers(data));
+      .then((data) => setReservations(data));
   };
 
   const onAddClick = (e) => {
     e.preventDefault();
-    history.push("/users/new");
+    history.push("/reservations/new");
   };
 
   const onEditClick = (id) => (e) => {
     e.preventDefault();
-    history.push(`/users/edit/${id}`);
+    history.push(`/reservations/edit/${id}`);
   };
 
   const onDeleteClick = (id) => (e) => {
     e.preventDefault();
-    fetch(`/api/users/${id}`, {
+    fetch(`/api/reservations/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -44,18 +44,14 @@ const ListUsers = () => {
       });
   };
 
-  const serialize = (role) => {
-    switch (role) {
+  const serialize = (status) => {
+    switch (status) {
       case 1:
-        return 'Admin';
+        return 'Pagado';
       case 2:
-        return 'Maintenance';
+        return 'Pendiente';
       case 3:
-        return 'Security';
-      case 4:
-        return 'Consecutive';
-      case 5:
-        return 'Costumer';
+        return 'Cancelado';
       default: break;
     }
   }
@@ -64,37 +60,38 @@ const ListUsers = () => {
     <Container className='py-3'>
       <div className='bg-secondary p-5'>
         <Button className='mb-4' variant='success' onClick={onAddClick}>
-          Agregar Usuario
+          Agregar reservacion
         </Button>
         <Table bordered hover>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Acciones</th>
+              <th>Tickets</th>
+              <th>Status</th>
+              <th>Flight</th>
+              <th>PaymentsAccount</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((item) => (
-              <tr key={item.userId}>
-                <td>{item.userId}</td>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{serialize(item.role)}</td>
+            {reservations.map((item) => (
+              <tr key={item.reservationId}>
+                <td>{item.reservationId}</td>
+                <td>{item.tickets}</td>
+                <td>{serialize(item.status)}</td>
+                <td>{item.flight}</td>
+                <td>{item.paymentsAccount}</td>
                 <td>
                   <Button
                     className='mx-2'
                     variant='info'
-                    onClick={onEditClick(item.userId)}
+                    onClick={onEditClick(item.reservationId)}
                   >
                     Editar
                   </Button>
                   <Button
                     className='mx-2'
                     variant='danger'
-                    onClick={onDeleteClick(item.userId)}
+                    onClick={onDeleteClick(item.reservationId)}
                   >
                     Eliminar
                   </Button>
@@ -108,4 +105,4 @@ const ListUsers = () => {
   );
 };
 
-export default ListUsers;
+export default ListReservations;
