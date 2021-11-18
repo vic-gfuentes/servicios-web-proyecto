@@ -72,6 +72,14 @@ const AddFlight = () => {
     history.push("/flights");
   };
 
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    setFlight({
+      ...flight,
+      [name]: parseInt(value),
+    });
+  };
+
   return (
     <Container className='py-3'>
       <div className='bg-secondary p-5'>
@@ -124,12 +132,16 @@ const AddFlight = () => {
           <Form.Group>
             <Form.Label>Estado</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='Estado'
-              name='status'
+              as='select'
               value={flight.status}
-              onChange={handleChange}
-            />
+              onChange={handleSelectChange}
+              name='status'
+            >
+              <option value={0}>Cancelado</option>
+              <option value={1}>Despegó</option>
+              <option value={2}>Arrivó</option>
+              <option value={3}>Tarde</option>
+            </Form.Control>
           </Form.Group>
 
           <Form.Group>

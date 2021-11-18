@@ -8,8 +8,8 @@ const EditPort = () => {
   const [airlines, setAirlines] = useState([]);
   const [port, setPort] = useState({
     number: "",
-    available: "",
-    type: "",
+    available: false,
+    type: 1,
     airlineId: "",
   });
 
@@ -28,7 +28,7 @@ const EditPort = () => {
           number: data.number,
           available: data.available,
           type: data.type,
-          airlineId: data.airlineId,
+          airlineId: data.airline.airlineId,
         })
       );
   }, []);
@@ -71,6 +71,14 @@ const EditPort = () => {
     history.push("/ports");
   };
 
+  const handleSelectChangeType = (e) => {
+    const { name, value } = e.target;
+     setPort({
+      ...port,
+      [name]: value,
+    });
+  };
+
   return (
     <Container className='py-3'>
       <div className='bg-secondary p-5'>
@@ -90,23 +98,27 @@ const EditPort = () => {
           <Form.Group>
             <Form.Label>Disponible</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='Disponible'
-              name='available'
+              as='select'
               value={port.available}
-              onChange={handleChange}
-            />
+              onChange={handleSelectChange}
+              name='available'
+            >
+              <option value={true}>Si</option>
+              <option value={false}>No</option>
+            </Form.Control>
           </Form.Group>
 
           <Form.Group>
             <Form.Label>Tipo</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='Tipo'
-              name='type'
+              as='select'
               value={port.type}
-              onChange={handleChange}
-            />
+              onChange={handleSelectChangeType}
+              name='type'
+            >
+              <option value={1}>Entrada</option>
+              <option value={2}>Salida</option>
+            </Form.Control>
           </Form.Group>
 
           <Form.Group>

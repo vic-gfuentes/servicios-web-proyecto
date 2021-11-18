@@ -4,33 +4,28 @@ import { Container, Button, Table } from "react-bootstrap";
 
 const ListBinnacles = () => {
   const history = useHistory();
-  const [Binnacles, setBinnacles] = useState([]);
+  const [binnacles, setBinnacles] = useState([]);
 
   useEffect(() => {
-    fetch("/api/Binnacles")
+    fetch("/api/binnacles")
       .then((response) => response.json())
       .then((data) => setBinnacles(data));
   }, []);
 
   const refresh = () => {
-    fetch("/api/Binnacles")
+    fetch("/api/binnacles")
       .then((response) => response.json())
       .then((data) => setBinnacles(data));
   };
 
-  const onAddClick = (e) => {
-    e.preventDefault();
-    history.push("/Binnacles/new");
-  };
-
   const onEditClick = (id) => (e) => {
     e.preventDefault();
-    history.push(`/Binnacles/edit/${id}`);
+    history.push(`/binnacles/edit/${id}`);
   };
 
   const onDeleteClick = (id) => (e) => {
     e.preventDefault();
-    fetch(`/api/Binnacles/${id}`, {
+    fetch(`/api/binnacles/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +50,7 @@ const ListBinnacles = () => {
             </tr>
           </thead>
           <tbody>
-            {Binnacles.map((item) => (
+            {binnacles.map((item) => (
               <tr key={item.BinnacleId}>
                 <td>{item.BinnacleId}</td>
                 <td>{item.log}</td>
