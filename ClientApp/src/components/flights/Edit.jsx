@@ -14,7 +14,6 @@ const EditFlight = () => {
     port: "",
   });
 
-
   useEffect(() => {
     fetch(`/api/flights/${id}`)
       .then((response) => response.json())
@@ -139,7 +138,6 @@ const EditFlight = () => {
               onChange={handleSelectChange}
             />
           </Form.Group>
-          
 
           <Button variant='success' type='submit' className='mt-3'>
             Guardar

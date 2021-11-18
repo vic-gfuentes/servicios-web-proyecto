@@ -64,7 +64,7 @@ const ListAirlines = () => {
               <tr key={item.airlineId}>
                 <td>{item.airlineId}</td>
                 <td>{item.name}</td>
-                <td>{item.country.name}</td>
+                <td>{item.country.name || "---"}</td>
                 <td>
                   <Button
                     className='mx-2'

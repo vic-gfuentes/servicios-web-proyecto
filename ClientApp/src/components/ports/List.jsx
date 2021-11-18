@@ -47,24 +47,24 @@ const ListPorts = () => {
   const serializeAvailable = (available) => {
     switch (available) {
       case false:
-        return 'No';
+        return "No";
       case true:
-        return 'Si';
-      default: break;
+        return "Si";
+      default:
+        break;
     }
-
-  }
+  };
 
   const serializeType = (Type) => {
     switch (Type) {
       case 1:
-        return 'Entrada';
+        return "Entrada";
       case 2:
-        return 'Salida';
-      default: break;
+        return "Salida";
+      default:
+        break;
     }
-
-  }
+  };
 
   return (
     <Container className='py-3'>

@@ -41,11 +41,20 @@ const EditPort = () => {
     });
   };
 
+  const handleAvailableToggle = (e) => {
+    const { id, checked } = e.target;
+
+    setPort({
+      ...port,
+      [id]: checked,
+    });
+  };
+
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
     setPort({
       ...port,
-      [name]: value,
+      [name]: parseInt(value),
     });
   };
 
@@ -71,14 +80,6 @@ const EditPort = () => {
     history.push("/ports");
   };
 
-  const handleSelectChangeType = (e) => {
-    const { name, value } = e.target;
-     setPort({
-      ...port,
-      [name]: value,
-    });
-  };
-
   return (
     <Container className='py-3'>
       <div className='bg-secondary p-5'>
@@ -95,17 +96,14 @@ const EditPort = () => {
             />
           </Form.Group>
 
-          <Form.Group>
-            <Form.Label>Disponible</Form.Label>
-            <Form.Control
-              as='select'
-              value={port.available}
-              onChange={handleSelectChange}
-              name='available'
-            >
-              <option value={true}>Si</option>
-              <option value={false}>No</option>
-            </Form.Control>
+          <Form.Group className='mb-3 mt-3' controlId='available'>
+            <Form.Check
+              type='checkbox'
+              label='Disponible'
+              id='available'
+              checked={port.available}
+              onChange={handleAvailableToggle}
+            />
           </Form.Group>
 
           <Form.Group>
@@ -113,7 +111,7 @@ const EditPort = () => {
             <Form.Control
               as='select'
               value={port.type}
-              onChange={handleSelectChangeType}
+              onChange={handleSelectChange}
               name='type'
             >
               <option value={1}>Entrada</option>
