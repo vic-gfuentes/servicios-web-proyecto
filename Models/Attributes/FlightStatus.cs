@@ -10,6 +10,7 @@ namespace servicios_web_proyecto.Models.Attributes
         Cancelled = 0,
         Departed = 1,
         Arrived = 2,
-        Late = 3
+        Late = 3,
+        Scheduled = 4
     }
 }
