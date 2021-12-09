@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
 
-const ListBinnacles = () => {
+const ListErrors = () => {
   const history = useHistory();
   const [binnacles, setBinnacles] = useState([]);
 
@@ -61,7 +61,7 @@ const ListBinnacles = () => {
           </thead>
           <tbody>
             {binnacles.map((item) => (
-              item.type != 0 ?
+              item.type == 0 ?
               <tr key={item.recordId}>
                 <td>{item.recordId}</td>
                 <td>{serialize(item.type)}</td>
@@ -76,6 +76,7 @@ const ListBinnacles = () => {
                   </Button>
                 </td>
               </tr> : null
+
             ))}
           </tbody>
         </Table>
@@ -84,4 +85,4 @@ const ListBinnacles = () => {
   );
 };
 
-export default ListBinnacles;
+export default ListErrors;

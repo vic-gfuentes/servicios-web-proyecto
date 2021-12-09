@@ -22,6 +22,8 @@ import {
   EditPort,
   ListPort,
 } from "../../components/ports";
+import { ListBinnacle } from "../../components/binnacles";
+import { ListError } from "../../components/errors";
 
 export const MaintenanceNav = () => {
   return (
@@ -38,6 +40,12 @@ export const MaintenanceNav = () => {
         </Link>
         <Link className='dropdown-item' to='/ports'>
           Puertos
+        </Link>
+        <Link className='dropdown-item' to='/binnacles'>
+          Bitacoras
+        </Link>
+        <Link className='dropdown-item' to='/errors'>
+          Errores
         </Link>
       </NavDropdown>
     </Fragment>
@@ -62,6 +70,9 @@ export const MaintenanceRouter = () => {
       <PrivateRoute exact path='/ports' component={ListPort} />
       <PrivateRoute path='/ports/edit/:id' component={EditPort} />
       <PrivateRoute exact path='/ports/new' component={AddPort} />
+
+      <PrivateRoute exact path='/binnacles' component={ListBinnacle} />
+      <PrivateRoute exact path='/errors' component={ListError} />
     </Fragment>
   );
 };
