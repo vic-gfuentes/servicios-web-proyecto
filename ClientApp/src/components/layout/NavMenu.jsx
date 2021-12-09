@@ -58,7 +58,7 @@ const NavMenu = () => {
           <Nav className='me-auto'>
             {currentUser.email ? (
               <Link className='nav-link' to='/dashboard'>
-                Dashboard
+                {currentUser.role == 5 ? "Inicio" : "Dashboard"}
               </Link>
             ) : (
               <Link className='nav-link' to='/'>

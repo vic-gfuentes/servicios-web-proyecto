@@ -139,6 +139,7 @@ const AddFlight = () => {
               <option value={1}>Despegó</option>
               <option value={2}>Arrivó</option>
               <option value={3}>Tarde</option>
+              <option value={4}>Agendado</option>
             </Form.Control>
           </Form.Group>
 
