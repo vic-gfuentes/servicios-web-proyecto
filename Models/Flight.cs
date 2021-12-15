@@ -15,6 +15,7 @@ namespace servicios_web_proyecto.Models
         public string Origin { get; set; }
         public string Destination { get; set; }
         public double TicketPrice { get; set; }
+        public string ImageUrl { get; set; }
         public DateTime Date { get; set; }
         public FlightStatus Status { get; set; }
         public Port Port { get; set; }
