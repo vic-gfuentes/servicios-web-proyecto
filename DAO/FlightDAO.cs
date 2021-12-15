@@ -12,6 +12,7 @@ namespace servicios_web_proyecto.DAO
         public string Origin { get; set; }
         public string Destination { get; set; }
         public double TicketPrice { get; set; }
+        public string ImageUrl { get; set; }
         public DateTime Date { get; set; }
         public FlightStatus Status { get; set; }
         public string PortId { get; set; }

@@ -103,6 +103,7 @@ namespace servicios_web_proyecto.Context
                     Origin = "Costa Rica",
                     Destination = "Colombia",
                     TicketPrice = 1000,
+                    ImageUrl = "https://cdn.colombia.com/images/v2/colombia-info/informacion/informacion-800.jpg",
                     Status = Models.Attributes.FlightStatus.Departed
                 }
             );

@@ -71,19 +71,8 @@ const FlightItem = ({ flight }) => {
       <div className='col-md-8'>
         <div className='px-0 px-md-3 py-2 py-md-0 d-flex flex-column justify-content-between h-100'>
           <div>
-            <h3 className='card-title'>{flight.destination}</h3>
-            <p className='card-text'>
-              A wonderful serenity has taken possession of my entire soul, like
-              these sweet mornings of spring which I enjoy with my whole heart.
-              I am alone, and feel the charm of existence in this spot, which
-              was created for the bliss of souls like mine.
-            </p>
-          </div>
-          <div>
             <div className='d-flex justify-content-between align-items-center'>
-              <div className='text-muted'>
-                <small className=''>Codigo de vuelo: {flight.flightId}</small>
-              </div>
+              <h3 className='card-title'>{flight.destination}</h3>
               <div className='btn btn-sm btn-primary'>
                 Agendar este vuelo
                 <svg
@@ -105,6 +94,17 @@ const FlightItem = ({ flight }) => {
                 </svg>
               </div>
             </div>
+            <p className='card-text'>
+              <div className='text-muted'>
+                <small className=''>Codigo de vuelo: {flight.flightId}</small>
+              </div>
+            </p>
+            <img
+              src={flight.imageUrl}
+              alt='Destination Image'
+              width='600'
+              height='300'
+            ></img>
           </div>
         </div>
       </div>

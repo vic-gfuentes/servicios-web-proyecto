@@ -8,6 +8,7 @@ const AddFlight = () => {
     origin: "",
     destination: "",
     ticketPrice: "",
+    imageUrl: "",
     date: "",
     status: "",
     portId: 0,
@@ -112,6 +113,17 @@ const AddFlight = () => {
               placeholder='Precio'
               name='ticketPrice'
               value={flight.ticketPrice}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Imagen destino</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='URL de la imagen de destino'
+              name='imageUrl'
+              value={flight.imageUrl}
               onChange={handleChange}
             />
           </Form.Group>

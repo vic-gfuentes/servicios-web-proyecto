@@ -9,6 +9,7 @@ const EditFlight = () => {
     origin: "",
     destination: "",
     ticketPrice: "",
+    imageUrl: "",
     date: "",
     status: "",
     port: "",
@@ -23,6 +24,7 @@ const EditFlight = () => {
           origin: data.origin,
           destination: data.destination,
           ticketPrice: data.ticketPrice,
+          imageUrl: data.imageUrl,
           date: data.date,
           status: data.status,
           port: data.port,
@@ -107,6 +109,17 @@ const EditFlight = () => {
           </Form.Group>
 
           <Form.Group>
+            <Form.Label>Imagen destino</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='URL de la imagen de destino'
+              name='imageUrl'
+              value={flight.imageUrl}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group>
             <Form.Label>Fecha</Form.Label>
             <Form.Control
               type='date'
@@ -120,12 +133,17 @@ const EditFlight = () => {
           <Form.Group>
             <Form.Label>Estado</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='Estado'
-              name='status'
+              as='select'
               value={flight.status}
-              onChange={handleChange}
-            />
+              onChange={handleSelectChange}
+              name='status'
+            >
+              <option value={0}>Cancelado</option>
+              <option value={1}>Despegó</option>
+              <option value={2}>Arrivó</option>
+              <option value={3}>Tarde</option>
+              <option value={4}>Agendado</option>
+            </Form.Control>
           </Form.Group>
 
           <Form.Group>
@@ -134,8 +152,8 @@ const EditFlight = () => {
               type='text'
               placeholder='Puerto'
               name='port'
-              value={flight.port}
-              onChange={handleSelectChange}
+              value={flight.port.number}
+              readOnly
             />
           </Form.Group>
 
