@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
-import {Link} from "react-router-dom";
 
 const ListReservations = () => {
   const history = useHistory();
@@ -17,16 +16,6 @@ const ListReservations = () => {
     fetch("/api/reservations")
       .then((response) => response.json())
       .then((data) => setReservations(data));
-  };
-
-  const onAddClick = (e) => {
-    e.preventDefault();
-    history.push("/reservations/new");
-  };
-
-  const onEditClick = (id) => (e) => {
-    e.preventDefault();
-    history.push(`/reservations/edit/${id}`);
   };
 
   const onDeleteClick = (id) => (e) => {
@@ -45,11 +34,6 @@ const ListReservations = () => {
       });
   };
 
-  const onClick = (e) => {
-    e.preventDefault();
-    history.push(`/payment`);
-  };
-
   const serialize = (status) => {
     switch (status) {
       case 1:
@@ -63,18 +47,18 @@ const ListReservations = () => {
     }
   };
 
+  const flightData = (flight) => {
+    if (flight) {
+      return flight.destination;
+    }
+
+    return "";
+  };
+
   return (
     <Container className='py-3'>
       <div className='bg-secondary p-5'>
-        <Button className='mb-4' variant='success' onClick={onAddClick}>
-          Agregar reservacion
-        </Button>
-        <Button className='mb-4' variant='warning' onClick={onClick}>
-          Realizar pago
-        </Button>
-
-        {/* <Button className='mb-4' variant='warning'><Link to="/payment">Route Name</Link></Button> */}
-
+        <h3>Tus reservaciones</h3>
         <Table bordered hover>
           <thead>
             <tr>
@@ -82,7 +66,6 @@ const ListReservations = () => {
               <th>Tickets</th>
               <th>Status</th>
               <th>Flight</th>
-              <th>PaymentsAccount</th>
             </tr>
           </thead>
           <tbody>
@@ -91,16 +74,8 @@ const ListReservations = () => {
                 <td>{item.reservationId}</td>
                 <td>{item.tickets}</td>
                 <td>{serialize(item.status)}</td>
-                <td>{item.flight.flightId}</td>
-                <td>{item.paymentsAccount.accountNumber}</td>
+                <td>{flightData(item.flight)}</td>
                 <td>
-                  <Button
-                    className='mx-2'
-                    variant='info'
-                    onClick={onEditClick(item.reservationId)}
-                  >
-                    Editar
-                  </Button>
                   <Button
                     className='mx-2'
                     variant='danger'

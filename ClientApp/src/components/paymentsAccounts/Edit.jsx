@@ -5,7 +5,6 @@ import { Container, Form, Button } from "react-bootstrap";
 const EditPaymentsAccount = () => {
   const history = useHistory();
   const { id } = useParams();
-  const [users, setUsers] = useState([]);
   const [paymentsAccount, setPaymentsAccount] = useState({
     accountNumber: "",
     type: "",
@@ -13,12 +12,6 @@ const EditPaymentsAccount = () => {
     accountPassword: "",
     userId: "",
   });
-
-  useEffect(() => {
-    fetch("/api/users")
-      .then((response) => response.json())
-      .then((data) => setUsers(data));
-  }, []);
 
   useEffect(() => {
     fetch(`/api/paymentsAccounts/${id}`)
@@ -89,15 +82,17 @@ const EditPaymentsAccount = () => {
             />
           </Form.Group>
 
-          <Form.Group>
-            <Form.Label>Tipo</Form.Label>
+          <Form.Group controlId='formBasicEmail'>
+            <Form.Label>Tipo de pago</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='Tipo'
-              name='type'
+              as='select'
               value={paymentsAccount.type}
-              onChange={handleChange}
-            />
+              onChange={handleSelectChange}
+              name='type'
+            >
+              <option value={1}>EasyPay</option>
+              <option value={2}>Card</option>
+            </Form.Control>
           </Form.Group>
 
           <Form.Group>
@@ -112,30 +107,14 @@ const EditPaymentsAccount = () => {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>AccountPassword</Form.Label>
+            <Form.Label>Account Password</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='AccountPassword'
+              type='password'
+              placeholder='Account Password'
               name='accountPassword'
               value={paymentsAccount.accountPassword}
               onChange={handleChange}
             />
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Label>Usuario</Form.Label>
-            <Form.Control
-              as='select'
-              value={paymentsAccount.userId}
-              onChange={handleChange}
-              name='userId'
-            >
-              {users.map((item) => (
-                <option key={item.userId} value={item.userId}>
-                  {item.name}
-                </option>
-              ))}
-            </Form.Control>
           </Form.Group>
 
           <Button variant='success' type='submit' className='mt-3'>
