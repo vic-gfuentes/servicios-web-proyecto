@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 const formatDate = (dateString) => {
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -6,6 +7,13 @@ const formatDate = (dateString) => {
 };
 
 const FlightItem = ({ flight }) => {
+  const history = useHistory();
+
+  const onReservateClick = (id) => (e) => {
+    e.preventDefault();
+    history.push(`/reservations/${id}/new`);
+  };
+
   return (
     <div className='row'>
       <div className='col-md-4'>
@@ -73,7 +81,7 @@ const FlightItem = ({ flight }) => {
           <div>
             <div className='d-flex justify-content-between align-items-center'>
               <h3 className='card-title'>{flight.destination}</h3>
-              <button className='btn btn-sm btn-primary'>
+              <button className='btn btn-sm btn-primary' onClick={onReservateClick(flight.flightId)}>
                 Agendar este vuelo
                 <svg
                   width='1em'
@@ -95,9 +103,9 @@ const FlightItem = ({ flight }) => {
               </button>
             </div>
             <p className='card-text'>
-              <div className='text-muted'>
+              <span className='text-muted'>
                 <small className=''>Codigo de vuelo: {flight.flightId}</small>
-              </div>
+              </span>
             </p>
             <img
               src={flight.imageUrl}

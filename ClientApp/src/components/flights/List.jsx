@@ -54,7 +54,8 @@ const ListFlights = () => {
         return "Llegada";
       case 3:
         return "Tarde";
-      case 5:
+      case 4:
+        return "Agendado"
       default:
         break;
     }

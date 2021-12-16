@@ -67,7 +67,6 @@ const ListPaymentsAccounts = () => {
               <th>Número de cuenta</th>
               <th>Tipo</th>
               <th>CVV</th>
-              <th>Contraseña</th>
               <th>Usuario</th>
             </tr>
           </thead>
@@ -77,7 +76,6 @@ const ListPaymentsAccounts = () => {
                 <td>{item.accountNumber}</td>
                 <td>{serializeType(item.type)}</td>
                 <td>{item.cvv}</td>
-                <td>{item.accountPassword}</td>
                 <td>{item.user.name || "---"}</td>
                 <td>
                   <Button

@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Container, Form, Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { Container, Form, Button, Card, Row, Col } from "react-bootstrap";
+import { useHistory, useParams } from "react-router-dom";
+
+const formatDate = (dateString) => {
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
 
 const AddReservation = () => {
   const history = useHistory();
+  const { flightId } = useParams();
   const [reservation, setReservation] = useState({
     tickets: "",
     status: "",
-    flightId: "",
-    paymentsAccountId: "",
+    flightId: flightId,
+    paymentsAccountId: 1,
   });
-  const [consec, setConsec] = useState({});
-  const [consecutives, setConsecutives] = useState([]);
-  const [flights, setFlights] = useState([]);
+  const [flight, setFlight] = useState({});
   const [paymentsAccounts, setPaymentsAccounts] = useState([]);
+  const [paymentMethod, setPaymentMethod] = useState(1);
 
   useEffect(() => {
-    fetch("/api/consecutives")
+    fetch(`/api/flights/${flightId}`)
       .then((response) => response.json())
-      .then((data) => setConsecutives(data));
-  }, []);
-
-  useEffect(() => {
-    fetch("/api/flights")
-      .then((response) => response.json())
-      .then((data) => setFlights(data));
+      .then((data) => setFlight(data));
   }, []);
 
   useEffect(() => {
@@ -41,31 +40,17 @@ const AddReservation = () => {
     });
   };
 
-  const handleFlightChange = (e) => {
-    const { name, value } = e.target;
-    setReservation({
-      ...reservation,
-      [name]: value,
-    });
+  const handlePaymentMethodChange = (e) => {
+    setPaymentMethod(parseInt(e.target.value));
   };
 
-  const handlePaymentsAccountChange = (e) => {
-    const { name, value } = e.target;
-    setReservation({
-      ...reservation,
-      [name]: value,
-    });
-  };
+  const handleSubmit = (type) => {
+    var reserv = reservation;
+    reserv.status = type;
 
-  const handleConsecutiveChange = (e) => {
-    setConsec(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetch(`/api/reservations/${consec}`, {
+    fetch(`/api/reservations/CT`, {
       method: "POST",
-      body: JSON.stringify(reservation),
+      body: JSON.stringify(reserv),
       headers: {
         "Content-Type": "application/json",
       },
@@ -80,116 +65,125 @@ const AddReservation = () => {
 
   const handleCancel = (e) => {
     e.preventDefault();
-    history.push("/reservations");
+    history.push("/dashboard");
   };
 
-  const serializeType = (type) => {
-    switch (type) {
-      case 1:
-        return "EasyPay";
-      case 2:
-        return "Card";
-      default:
-        break;
+  const renderPaymentMethod = () => {
+    if (paymentMethod == 1) {
+      return (
+        <Form.Group>
+          <Form.Label>Cuenta de Pago</Form.Label>
+          <Form.Control
+            as='select'
+            value={reservation.paymentsAccountId}
+            onChange={handleChange}
+            name='paymentsAccountId'
+          >
+            {paymentsAccounts.map((item) => (
+              <option
+                key={item.paymentsAccountId}
+                value={item.paymentsAccountId}
+              >
+                {item.accountNumber}
+              </option>
+            ))}
+          </Form.Control>
+        </Form.Group>
+      );
     }
+
+    if (paymentMethod == 2) {
+      return (
+        <div>
+          <Form.Group>
+            <Form.Label>Numero de tarjeta</Form.Label>
+            <Form.Control type='number' placeholder='Numero de tarjeta' />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>CVV</Form.Label>
+            <Form.Control type='number' placeholder='CVV' />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Fecha de vencimiento</Form.Label>
+            <Form.Control type='date' />
+          </Form.Group>
+        </div>
+      );
+    }
+
+    return <div></div>;
   };
 
-  const serializeStatus = (Status) => {
-    switch (Status) {
-      case 1:
-        return "Pagado";
-      case 2:
-        return "Pendiente";
-      case 3:
-        return "Cancelado";
-      default:
-        break;
-    }
+  const handlePayment = (e) => {
+    e.preventDefault();
+    handleSubmit(1);
+  };
+  const handleReservation = (e) => {
+    e.preventDefault();
+    handleSubmit(2);
   };
 
   return (
     <Container className='py-3'>
       <div className='bg-secondary p-5'>
-        <Form onSubmit={handleSubmit} className='mt-4'>
+        <Form className='mt-4'>
           <h1>Agregar reservacion:</h1>
 
           <Form.Group>
-            <Form.Label>Tickets</Form.Label>
+            <Form.Label>Cantidad de Tickets</Form.Label>
             <Form.Control
-              type='text'
+              type='number'
               placeholder='Tickets'
               name='tickets'
               value={reservation.tickets}
               onChange={handleChange}
+              min={1}
             />
           </Form.Group>
 
-          <Form.Group>
-            <Form.Label>Estado</Form.Label>
-            <Form.Control
-              as='select'
-              value={reservation.status}
-              onChange={handleChange}
-              name='status'
-            >
-              {flights.map((item) => (
-                <option key={item.status} value={item.status}>
-                  {item.status}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
+          <Row>
+            <Col>
+              <Container className='my-3'>
+                <Card>
+                  <Card.Img variant='top' src={flight.imageUrl} />
+                  <Card.Body>
+                    <Card.Title>{flight.destination}</Card.Title>
+                    <Card.Text>{formatDate(flight.date)}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Container>
+            </Col>
+            <Col>
+              <Card className='my-3'>
+                <Card.Body>
+                  <Card.Title>Seleccione el metodo de pago</Card.Title>
+                  <div>
+                    <Form.Group>
+                      <Form.Control
+                        as='select'
+                        value={paymentMethod}
+                        onChange={handlePaymentMethodChange}
+                      >
+                        <option value={1}>EasyPay</option>
+                        <option value={2}>Tarjeta de Credito</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </div>
+                  <div className='mt-2'>{renderPaymentMethod()}</div>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
 
-          <Form.Group>
-            <Form.Label>Vuelo</Form.Label>
-            <Form.Control
-              as='select'
-              value={reservation.flightId}
-              onChange={handleChange}
-              name='flightId'
-            >
-              {flights.map((item) => (
-                <option key={item.flightId} value={item.flightId}>
-                  {item.flightId}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Label>Pago</Form.Label>
-            <Form.Control
-              as='select'
-              value={reservation.paymentsAccountId}
-              onChange={handleChange}
-              name='paymentsAccountId'
-            >
-              {paymentsAccounts.map((item) => (
-                <option key={item.paymentsAccountId} value={item.paymentsAccountId}>
-                  {item.paymentsAccountId}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Label>Consecutivo</Form.Label>
-            <Form.Control
-              as='select'
-              value={consec}
-              onChange={handleConsecutiveChange}
-              name='consec'
-            >
-              {consecutives.map((item) => (
-                <option value={item.prefix} key={item.prefix}>
-                  {item.name} - {item.prefix}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-
-          <Button variant='success' type='submit' className='mt-3'>
-            Guardar
+          <Button variant='success' className='mt-3' onClick={handlePayment}>
+            Realizar pago
+          </Button>
+          <Button
+            variant='warning'
+            className='mt-3 mx-3'
+            onClick={handleReservation}
+          >
+            Reservar unicamente
           </Button>
           <Button variant='info' className='mt-3 mx-2' onClick={handleCancel}>
             Cancelar

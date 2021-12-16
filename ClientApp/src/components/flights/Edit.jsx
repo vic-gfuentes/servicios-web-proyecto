@@ -12,13 +12,14 @@ const EditFlight = () => {
     imageUrl: "",
     date: "",
     status: "",
-    port: "",
+    portId: "",
   });
+  const [port, setPort] = useState({});
 
   useEffect(() => {
     fetch(`/api/flights/${id}`)
       .then((response) => response.json())
-      .then((data) =>
+      .then((data) => {
         setFlight({
           flightId: data.flightId,
           origin: data.origin,
@@ -27,9 +28,10 @@ const EditFlight = () => {
           imageUrl: data.imageUrl,
           date: data.date,
           status: data.status,
-          port: data.port,
-        })
-      );
+          portId: data.port.portId,
+        });
+        setPort(data.port);
+      });
   }, []);
 
   const handleChange = (e) => {
@@ -152,7 +154,7 @@ const EditFlight = () => {
               type='text'
               placeholder='Puerto'
               name='port'
-              value={flight.port.number}
+              value={port.number}
               readOnly
             />
           </Form.Group>
