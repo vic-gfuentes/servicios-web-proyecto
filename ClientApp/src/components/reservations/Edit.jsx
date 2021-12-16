@@ -6,7 +6,7 @@ const EditReservation = () => {
   const history = useHistory();
   const { id } = useParams();
   const [flights, setFlights] = useState([]);
-  const [paymentsAccount, setPaymentsAccount] = useState([]);
+  const [paymentsAccounts, setPaymentsAccounts] = useState([]);
   const [reservation, setReservation] = useState({
     tickets: "",
     status: "",
@@ -21,9 +21,9 @@ const EditReservation = () => {
   }, []);
 
   useEffect(() => {
-    fetch("/api/paymentsAccount")
+    fetch("/api/paymentsAccounts")
       .then((response) => response.json())
-      .then((data) => setPaymentsAccount(data));
+      .then((data) => setPaymentsAccounts(data));
   }, []);
 
   useEffect(() => {
@@ -34,8 +34,8 @@ const EditReservation = () => {
           reservationId: data.reservationId,
           tickets: data.tickets,
           status: data.status,
-          flightId: data.flightId,
-          paymentsAccountId: data.paymentsAccountId,
+          flightId: data.flight.flightId,
+          paymentsAccountId: data.paymentsAccount.paymentsAccountId,
         })
       );
   }, []);
@@ -78,6 +78,30 @@ const EditReservation = () => {
     history.push("/reservations");
   };
 
+  const serializeType = (type) => {
+    switch (type) {
+      case 1:
+        return "EasyPay";
+      case 2:
+        return "Card";
+      default:
+        break;
+    }
+  };
+
+  const serializeStatus = (Status) => {
+    switch (Status) {
+      case 1:
+        return "Pagado";
+      case 2:
+        return "Pendiente";
+      case 3:
+        return "Cancelado";
+      default:
+        break;
+    }
+  };
+
   return (
     <Container className='py-3'>
       <div className='bg-secondary p-5'>
@@ -97,12 +121,17 @@ const EditReservation = () => {
           <Form.Group>
             <Form.Label>Estado</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='Estado'
-              name='status'
+              as='select'
               value={reservation.status}
               onChange={handleChange}
-            />
+              name='status'
+            >
+              {flights.map((item) => (
+                <option key={item.status} value={item.status}>
+                  {serializeStatus(item.status)}
+                </option>
+              ))}
+            </Form.Control>
           </Form.Group>
 
           <Form.Group>
@@ -129,12 +158,12 @@ const EditReservation = () => {
               onChange={handleSelectChange}
               name='paymentsAccountId'
             >
-              {paymentsAccount.map((item) => (
+              {paymentsAccounts.map((item) => (
                 <option
                   key={item.paymentsAccountId}
                   value={item.paymentsAccountId}
                 >
-                  {item.paymentsAccountId}
+                  {serializeType(item.type)}
                 </option>
               ))}
             </Form.Control>

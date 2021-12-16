@@ -73,7 +73,7 @@ const FlightItem = ({ flight }) => {
           <div>
             <div className='d-flex justify-content-between align-items-center'>
               <h3 className='card-title'>{flight.destination}</h3>
-              <div className='btn btn-sm btn-primary'>
+              <button className='btn btn-sm btn-primary'>
                 Agendar este vuelo
                 <svg
                   width='1em'
@@ -92,7 +92,7 @@ const FlightItem = ({ flight }) => {
                     d='M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z'
                   ></path>
                 </svg>
-              </div>
+              </button>
             </div>
             <p className='card-text'>
               <div className='text-muted'>

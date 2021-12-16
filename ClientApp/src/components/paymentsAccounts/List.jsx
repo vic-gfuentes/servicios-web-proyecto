@@ -1,37 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
-import {Link} from "react-router-dom";
 
-const ListReservations = () => {
+const ListPaymentsAccounts = () => {
   const history = useHistory();
-  const [reservations, setReservations] = useState([]);
+  const [paymentsAccounts, setPaymentsAccounts] = useState([]);
 
   useEffect(() => {
-    fetch("/api/reservations")
+    fetch("/api/paymentsAccounts")
       .then((response) => response.json())
-      .then((data) => setReservations(data));
+      .then((data) => setPaymentsAccounts(data));
   }, []);
 
   const refresh = () => {
-    fetch("/api/reservations")
+    fetch("/api/paymentsAccounts")
       .then((response) => response.json())
-      .then((data) => setReservations(data));
+      .then((data) => setPaymentsAccounts(data));
   };
 
   const onAddClick = (e) => {
     e.preventDefault();
-    history.push("/reservations/new");
+    history.push("/paymentsAccounts/new");
   };
 
   const onEditClick = (id) => (e) => {
     e.preventDefault();
-    history.push(`/reservations/edit/${id}`);
+    history.push(`/paymentsAccounts/edit/${id}`);
   };
 
   const onDeleteClick = (id) => (e) => {
     e.preventDefault();
-    fetch(`/api/reservations/${id}`, {
+    fetch(`/api/paymentsAccounts/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -45,19 +44,12 @@ const ListReservations = () => {
       });
   };
 
-  const onClick = (e) => {
-    e.preventDefault();
-    history.push(`/payment`);
-  };
-
-  const serialize = (status) => {
-    switch (status) {
+  const serializeType = (Type) => {
+    switch (Type) {
       case 1:
-        return "Pagado";
+        return "EasyPay";
       case 2:
-        return "Pendiente";
-      case 3:
-        return "Cancelado";
+        return "Card";
       default:
         break;
     }
@@ -67,44 +59,38 @@ const ListReservations = () => {
     <Container className='py-3'>
       <div className='bg-secondary p-5'>
         <Button className='mb-4' variant='success' onClick={onAddClick}>
-          Agregar reservacion
+          Agregar método de pago
         </Button>
-        <Button className='mb-4' variant='warning' onClick={onClick}>
-          Realizar pago
-        </Button>
-
-        {/* <Button className='mb-4' variant='warning'><Link to="/payment">Route Name</Link></Button> */}
-
         <Table bordered hover>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Tickets</th>
-              <th>Status</th>
-              <th>Flight</th>
-              <th>PaymentsAccount</th>
+              <th>Número de cuenta</th>
+              <th>Tipo</th>
+              <th>CVV</th>
+              <th>Contraseña</th>
+              <th>Usuario</th>
             </tr>
           </thead>
           <tbody>
-            {reservations.map((item) => (
-              <tr key={item.reservationId}>
-                <td>{item.reservationId}</td>
-                <td>{item.tickets}</td>
-                <td>{serialize(item.status)}</td>
-                <td>{item.flight.flightId}</td>
-                <td>{item.paymentsAccount.accountNumber}</td>
+            {paymentsAccounts.map((item) => (
+              <tr key={item.paymentsAccountId}>
+                <td>{item.accountNumber}</td>
+                <td>{serializeType(item.type)}</td>
+                <td>{item.cvv}</td>
+                <td>{item.accountPassword}</td>
+                <td>{item.user.name || "---"}</td>
                 <td>
                   <Button
                     className='mx-2'
                     variant='info'
-                    onClick={onEditClick(item.reservationId)}
+                    onClick={onEditClick(item.paymentsAccountId)}
                   >
                     Editar
                   </Button>
                   <Button
                     className='mx-2'
                     variant='danger'
-                    onClick={onDeleteClick(item.reservationId)}
+                    onClick={onDeleteClick(item.paymentsAccountId)}
                   >
                     Eliminar
                   </Button>
@@ -118,4 +104,4 @@ const ListReservations = () => {
   );
 };
 
-export default ListReservations;
+export default ListPaymentsAccounts;

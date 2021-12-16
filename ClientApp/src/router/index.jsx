@@ -5,6 +5,7 @@ import Landing from "../components/layout/pages/landing";
 import LogIn from "../components/layout/pages/auth/LogIn";
 import Register from "../components/layout/pages/auth/Register";
 import Dashboard from "../components/layout/Dashboard";
+import Payment from "../components/layout/Payment";
 import Profile from "../components/layout/pages/profile";
 import {
   AdminRouter,
@@ -49,6 +50,7 @@ const Routes = () => {
       <Route path='/register' component={Register} />
       <Switch>
         <Route exact path='/dashboard' component={Dashboard} />
+        <Route exact path='/payment' component={Payment} />
         <Route exact path='/profile' component={Profile} />
         {addRoutesBasedOnRole()}
       </Switch>

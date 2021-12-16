@@ -19,6 +19,7 @@ import {
   ListAirline,
 } from "../../components/airlines";
 import { ListBinnacle } from "../../components/binnacles";
+import { ListError } from "../../components/errors";
 import { AddFlight, EditFlight, ListFlight } from "../../components/flights";
 import {
   AddReservation,
@@ -26,6 +27,11 @@ import {
   ListReservation,
 } from "../../components/reservations";
 import { AddPort, EditPort, ListPort } from "../../components/ports";
+import {
+  AddPaymentsAccount,
+  EditPaymentsAccount,
+  ListPaymentsAccount,
+} from "../../components/paymentsAccounts";
 
 export const AdminNav = () => {
   return (
@@ -40,6 +46,9 @@ export const AdminNav = () => {
         <Link className='dropdown-item' to='/reservations'>
           Reservaciones
         </Link>
+        <Link className='dropdown-item' to='/paymentsAccounts'>
+          Métodos de pago
+        </Link>
       </NavDropdown>
 
       <NavDropdown title='Mantenimiento'>
@@ -51,6 +60,9 @@ export const AdminNav = () => {
         </Link>
         <Link className='dropdown-item' to='/binnacles'>
           Bitacoras
+        </Link>
+        <Link className='dropdown-item' to='/errors'>
+          Errores
         </Link>
         <Link className='dropdown-item' to='/flights'>
           Vuelos
@@ -83,6 +95,7 @@ export const AdminRouter = () => {
       <PrivateRoute exact path='/airlines/new' component={AddAirline} />
 
       <PrivateRoute exact path='/binnacles' component={ListBinnacle} />
+      <PrivateRoute exact path='/errors' component={ListError} />
 
       <PrivateRoute exact path='/flights' component={ListFlight} />
       <PrivateRoute path='/flights/edit/:id' component={EditFlight} />
@@ -95,6 +108,10 @@ export const AdminRouter = () => {
       <PrivateRoute exact path='/ports' component={ListPort} />
       <PrivateRoute path='/ports/edit/:id' component={EditPort} />
       <PrivateRoute exact path='/ports/new' component={AddPort} />
+
+      <PrivateRoute exact path='/paymentsAccounts' component={ListPaymentsAccount} />
+      <PrivateRoute path='/paymentsAccounts/edit/:id' component={EditPaymentsAccount} />
+      <PrivateRoute exact path='/paymentsAccounts/new' component={AddPaymentsAccount} />
     </Fragment>
   );
 };
